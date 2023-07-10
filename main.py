@@ -1,6 +1,6 @@
 import mecademicpy.robot as MecademicRobot
 import mecademicpy.robot_classes  
-from SOP16 import SOP16
+from BGA24k import BGA
 import sys
 from time import sleep
 #use python -m main
@@ -12,7 +12,7 @@ except mecademicpy.robot_classes.CommunicationError:
     print("Error Communicating with the robot. Exiting Now.")
     sys.exit()
 
-component = SOP16(robot)
+component = BGA(robot)
 
 
 robot.ActivateAndHome()
