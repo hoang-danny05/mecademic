@@ -20,8 +20,8 @@ robot.ActivateAndHome()
 try:
     print("Starting Try loop")
     print(robot.GetJoints())
-    for i in range(1):
-        robot.SetJointVel(50)
+    for i in range(2):
+        print(f"Starting Loop {i+1}")
         component.pressButton()
         component.grabComp()
         component.flux()
