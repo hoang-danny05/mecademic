@@ -17,14 +17,14 @@ except mecademicpy.robot_classes.CommunicationError:
     sys.exit()
 
 component = BGAsm(robot)
-
-
 robot.ActivateAndHome()
+
+loops = sys.argv[1] if len(sys.argv) > 1 else 1 #default amount of loops is 1, else it is the first argument
 
 try:
     print("Starting Try loop")
     print(robot.GetJoints())
-    for i in range(630): #You know what to do >:] (try 500 at a time) doing 100 + 108+53
+    for i in range(loops): #You know what to do >:] (try 500 at a time) doing 100 + 108+53
         print(f"Starting Loop {i+1}")
         component.pressButton()
         component.grabComp()
