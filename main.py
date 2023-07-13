@@ -1,6 +1,6 @@
 import mecademicpy.robot as MecademicRobot
 import mecademicpy.robot_classes  
-from BGA24k import BGA
+from BGAsm import BGAsm
 import sys
 from time import sleep
 #use python -m main
@@ -16,7 +16,7 @@ except mecademicpy.robot_classes.CommunicationError:
     print("Error Communicating with the robot. Exiting Now.")
     sys.exit()
 
-component = BGA(robot)
+component = BGAsm(robot)
 
 
 robot.ActivateAndHome()
@@ -24,12 +24,12 @@ robot.ActivateAndHome()
 try:
     print("Starting Try loop")
     print(robot.GetJoints())
-    for i in range(1): #You know what to do >:] (try 500 at a time)
+    for i in range(630): #You know what to do >:] (try 500 at a time) doing 100 + 108+53
         print(f"Starting Loop {i+1}")
         component.pressButton()
         component.grabComp()
         component.flux()
-        component.preheat()
+        #component.preheat()
         component.solder()
         component.drop()
 except KeyboardInterrupt:
