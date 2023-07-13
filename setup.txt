@@ -1,0 +1,9 @@
+How to connect to pi remotely:
+1) open terminal and execute "ssh pi@JAB"
+2) type "yes" and enter the password
+3) When connecting to the robot, make sure the ethernet IP is connect by doing "ifconfig eth0". 
+    - the "inet" value must be 192.168.0.203
+    - if it's not, do "sudo ifconfig eth0 192.168.0.203"
+4) now you can try connecting to the robot
+5) "git clone https://github.com/hoang-danny05/mecademic" to download the code
+6) "git pull origin" to update the code
