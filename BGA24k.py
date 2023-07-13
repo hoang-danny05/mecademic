@@ -4,29 +4,29 @@ import mecademicpy.robot
 class BGA:
     def __init__(self, robot):
         self.rbt = robot
+
     
     def pressButton(self):
         #RESET ROBOT
         self.rbt.SetJointVel(100)
         self.rbt.MoveJoints(90,0,0,0,0,-90)
         self.rbt.MoveJoints(89.60276,58.61276,-9.38405,2.50345,-47.11293,-90)
-        self.rbt.MoveJoints(89.60534,66.78595,-11.62164,2.29862,-53.04362,-90.82759)
         
-        #right above, change velocity to boop
-        # self.rbt.MoveJoints(89.60276,61.97767,-9.49086,2.3819,-50.36845,2.17414)
+        #right above, change position to boop
+        self.rbt.MoveJoints(89.60534,67.08336,-11.71448,2.29293,-53.24948,-90.81724)
+        ## OLD, USES RUBBER ## self.rbt.MoveJoints(89.60276,61.97767,-9.49086,2.3819,-50.36845,2.17414)
         #boop active, wait a minute
         # self.rbt.Delay(.25)
-        self.rbt.MoveLinRelWrf(0,0,-1,0,0,0)
-        self.rbt.SetJointVel(100)
+        # self.rbt.SetJointVel(100)
+        # self.rbt.MoveLinRelWrf(0,0,20,0,0,0)
+        # #now go up robo loser
+        # self.rbt.MoveJoints(90.93181,43.23,9.86819,2.6519,-50.89707,2.07069)
         print("button pressed")
-        self.rbt.MoveLinRelWrf(0,0,20,0,0,0)
-        #now go up robo loser
-        self.rbt.MoveJoints(90.93181,43.23,9.86819,2.6519,-50.89707,2.07069)
-        self.rbt.SetJointVel(50)
     
     def grabComp(self):
         #test
         self.rbt.MoveJoints(90.93181,43.23,9.86819,2.6519,-50.89707,2.07069)
+        self.rbt.SetJointVel(50) #OPTIONAL
         #is right above, going to grab.
         #########################################################
         ##TODO: FIX PART PICKUP SO ITS MORE RELIABLE (In hashes)
@@ -83,8 +83,8 @@ class BGA:
         # knock knock, at solder
         #you might want it to be slower
         self.rbt.SetCartLinVel(20)
-        self.rbt.MoveLinRelWrf(0, 0, -3.5, 0, 0, 0)
-        self.rbt.MoveLinRelWrf(0 , -60, 0, 0, 0, 0)
+        self.rbt.MoveLinRelWrf(0, 0, -1.5, 0, 0, 0) #normally 3.5
+        self.rbt.MoveLinRelWrf(0 , -60, 0, 0, 0, 0) # normally only -60
         # self.rbt.SetCartLinVel(20)
         # self.rbt.MoveLinRelWrf(0 , -15, 0, 0, 0, 0)
         # shimmy through solder
@@ -95,12 +95,12 @@ class BGA:
 
     def drop(self):
         self.rbt.MoveJoints(-12.62612,21.78621,18.6975,-19.03603,-42.09155,14.36638)
-        self.rbt.SetCartLinVel(200)
+        self.rbt.SetCartLinVel(300)
         self.rbt.MoveLinRelWrf(0 , -135, 0, 0, 0, 0)
         # testing the waters
         print("valves turned off")
         self.rbt.SetValveState(0, 0)  
-        self.rbt.Delay(.5)
+        ## REMOVED TO OPTIMIZE ## self.rbt.Delay(.5)
         #turnoff of valve, going to bump part off
         #########################################################
         #TODO: Change drop process so its less awkward and more reliable
@@ -109,9 +109,12 @@ class BGA:
         #consider adding negative x to MoveLn RelWrf to be closer to the plate. 
         #########################################################
         ##OLD##self.rbt.MoveJoints(-58.40948,59.00793,-52.23078,-85.83879,-58.67224,82.05517)
-        self.rbt.MoveJoints(-58.51552,68.82259,-71.96121,-91.34845,-58.87966,92.94828)
+        # self.rbt.MoveJoints(-58.51552,68.82259,-71.96121,-91.34845,-58.87966,92.94828)
+        #up (OPTIONAL)
         self.rbt.MoveJoints(-58.51578,61.57293,-51.12905,-83.2169,-59.52776,77.14052)
+        #down
         self.rbt.MoveJoints(-58.51552,68.82259,-71.96121,-91.34845,-58.87966,92.94828)
+        #up
         self.rbt.SetJointVel(100)
         self.rbt.Delay(.5) 
         # plop  
