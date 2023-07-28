@@ -15,6 +15,9 @@ try:
 except mecademicpy.robot_classes.CommunicationError:
     print("Error Communicating with the robot. Exiting Now.")
     sys.exit()
+except TimeoutError:
+    print("Error Communicating with the robot. Exiting Now.")
+    sys.exit()
 
 component = BGAsm(robot)
 robot.ActivateAndHome()
@@ -40,7 +43,7 @@ else:
     print("Successfully Exited.")
 
 print("Program finished.")
-robot.MoveJoints(90,0,0,0,0,-90)
+robot.MoveJoints(90,0,0,0,0,0)
 robot.Delay(2)
 robot.SetValveState(0, 0)  
 # robot.DeactivateRobot()
