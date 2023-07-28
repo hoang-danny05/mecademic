@@ -11,7 +11,7 @@ from time import sleep
 try:
     robot = MecademicRobot.Robot()
     # print(robot.IsConnected())
-    robot.Connect(address="192.168.0.100", enable_synchronous_mode=True)
+    robot.Connect(address="192.168.0.100", enable_synchronous_mode=True, disconnect_on_exception=False)
 except mecademicpy.robot_classes.CommunicationError:
     print("Error Communicating with the robot. Exiting Now.")
     sys.exit()
@@ -33,9 +33,14 @@ try:
         component.solder()
         component.drop()
 except KeyboardInterrupt:
-    print("Manually Exited")
+    print("Manually Exited With CTRL+C")
+except Exception:
+    print("Unknown Exception happened, exiting.")
+else: 
+    print("Successfully Exited.")
 
-print("successfully exited")
+print("Program finished.")
+robot.MoveJoints(90,0,0,0,0,-90)
 robot.Delay(2)
 robot.SetValveState(0, 0)  
 # robot.DeactivateRobot()
