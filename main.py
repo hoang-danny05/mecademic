@@ -1,8 +1,10 @@
 import mecademicpy.robot as MecademicRobot
 import mecademicpy.robot_classes  
-from BGAsm import BGAsm
+from SOP16 import SOP16
 import sys
 from time import sleep
+#debugging
+import traceback
 #use python -m main
 
 ############################################
@@ -18,11 +20,21 @@ except mecademicpy.robot_classes.CommunicationError:
 except TimeoutError:
     print("Error Communicating with the robot. Exiting Now.")
     sys.exit()
+except Exception:
+    traceback.print_exc()
+    sys.exit()
 
-component = BGAsm(robot)
+component = SOP16(robot)
 robot.ActivateAndHome()
 
-loops = sys.argv[1] if len(sys.argv) > 1 else 1 #default amount of loops is 1, else it is the first argument
+try:
+    loops = int(sys.argv[1]) if len(sys.argv) > 1 else 1 #default amount of loops is 1, else it is the first argument
+except ValueError:
+    print("Wrong type entered, only an integer is accepted. Using default value of 1.")
+    loops = 1
+except Exception as e:
+    traceback.print_exc()
+    loops = 1
 
 try:
     print("Starting Try loop")
@@ -32,19 +44,29 @@ try:
         component.pressButton()
         component.grabComp()
         component.flux()
-        #component.preheat()
+        # #component.preheat()
         component.solder()
         component.drop()
 except KeyboardInterrupt:
-    print("Manually Exited With CTRL+C")
-except Exception:
-    print("Unknown Exception happened, exiting.")
+    robot.PauseMotion() #experimental, said to completely interrupt the robot.
+    robot.ClearMotion()
+    print("\nManually Exited With CTRL+C")
+except Exception as e:
+    print(f"Unknown Exception \"{e}\" happened, exiting.")
+    print("######## START TRACEBACK")
+    traceback.print_exc()
+    print("######## END TRACEBACK")
 else: 
     print("Successfully Exited.")
 
 print("Program finished.")
-robot.MoveJoints(90,0,0,0,0,0)
-robot.Delay(2)
-robot.SetValveState(0, 0)  
+try:
+    robot.ResumeMotion()
+    robot.MoveJoints(90,0,0,0,0,0)
+    # robot.Delay(2)
+    robot.SetValveState(0, 0)
+except Exception:
+    traceback.print_exc()
+    print("robot interrupted during deactivation.") 
 # robot.DeactivateRobot()
 robot.Disconnect()
