@@ -39,7 +39,7 @@ class SOP16:
 
     def flux(self):
         self.rbt.MoveJoints(63.82759,47.56629,-37.65569,85.16172,-64.25638,-78.9819)#upflux
-        self.rbt.MoveLinRelWrf(0,0,-45,0,0,0)
+        self.rbt.MoveLinRelWrf(0,0,-44,0,0,0)
         self.rbt.Delay(.5)
         self.rbt.MoveLinRelWrf(0,0,50,0,0,0)
         # self.rbt.MoveJoints()
@@ -55,9 +55,9 @@ class SOP16:
         self.rbt.SetJointVel(55)
         self.rbt.MoveJoints(16.38724,26.13543,22.60319,21.36569,-50.75017,-13.90172)
         self.rbt.MoveLinRelWrf(0,0,-2.3,0,0,0)
-        self.rbt.SetCartLinVel(45)
+        self.rbt.SetCartLinVel(60)
         self.rbt.MoveLinRelWrf(0, -55, 0, 0, 0, 0) #75 goes all the way through
-        self.rbt.MoveLinRelWrf(0, 0, 50, 0, 0, 0)
+        self.rbt.MoveLinRelWrf(0, 0, 20, -30, 0, 0)
         # self.rbt.MoveJoints()
         # self.rbt.MoveJoints()
         # self.rbt.MoveJoints()
