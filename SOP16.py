@@ -57,7 +57,10 @@ class SOP16:
         self.rbt.MoveLinRelWrf(0,0,-2.3,0,0,0)
         self.rbt.SetCartLinVel(60)
         self.rbt.MoveLinRelWrf(0, -55, 0, 0, 0, 0) #75 goes all the way through
-        self.rbt.MoveLinRelWrf(0, 0, 20, -30, 0, 0)
+        self.rbt.SetJointVel(10)
+        self.rbt.MoveJointsRel(0,0,0,0,0,-40)
+        self.rbt.SetJointVel(55)
+        # self.rbt.MoveLinRelWrf(0, 0, 20, -30, 0, 0) #jared movement
         # self.rbt.MoveJoints()
         # self.rbt.MoveJoints()
         # self.rbt.MoveJoints()

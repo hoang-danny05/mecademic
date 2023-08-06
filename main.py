@@ -62,8 +62,10 @@ else:
 print("Program finished.")
 try:
     robot.ResumeMotion()
+    #################################################
+    # ROBOT RESET
+    #################################################
     robot.MoveJoints(90,0,0,0,0,0)
-    # robot.Delay(2)
     robot.SetValveState(0, 0)
 except Exception:
     traceback.print_exc()
