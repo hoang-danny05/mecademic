@@ -27,9 +27,9 @@ class BGAsm:
 
     def flux(self):
         self.rbt.MoveJoints(63.82759,47.56629,-37.65569,85.16172,-64.25638,-78.9819)#upflux
-        self.rbt.MoveLinRelWrf(0,0,-47.5,0,0,0)
-        self.rbt.Delay(.5)
-        self.rbt.MoveLinRelWrf(0,0,50,0,0,0)
+        # self.rbt.MoveLinRelWrf(0,0,-47.5,0,0,0)
+        # self.rbt.Delay(.5)
+        # self.rbt.MoveLinRelWrf(0,0,50,0,0,0)
         
     def solder(self):
         self.rbt.SetJointVel(55)

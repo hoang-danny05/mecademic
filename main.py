@@ -3,6 +3,7 @@ import mecademicpy.robot_classes
 from SOP16 import SOP16
 import sys
 from time import sleep
+from VacuumSwitch import VacuumSwitch
 #debugging
 import traceback
 #use python -m main
@@ -24,6 +25,8 @@ except Exception:
     traceback.print_exc()
     sys.exit()
 
+switch = VacuumSwitch()
+
 component = SOP16(robot)
 robot.ActivateAndHome()
 
@@ -43,7 +46,11 @@ try:
         print(f"Starting Loop {i+1}")
         component.pressButton()
         component.grabComp()
+        if switch.read_state() == False:
+            raise Exception('No part is connected to the robot') 
         component.flux()
+        if switch.read_state() == False:
+            raise Exception('No part is connected to the robot') 
         # #component.preheat()
         component.solder()
         component.drop()
