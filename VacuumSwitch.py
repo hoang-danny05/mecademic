@@ -27,6 +27,6 @@ class VacuumSwitch:
             GPIO.output(11, False)
             raise AssertionError("The robot's part state was not expected")
     
-    def cleanup():
+    def cleanup(self):
         GPIO.cleanup()
         GPIO.output(11, False)
