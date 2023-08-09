@@ -1,9 +1,11 @@
 import mecademicpy.robot
+from VacuumSwitch import VacuumSwitch
 
 #class for the SOP16 component (2 sets of 8 terminals)
 class SOP16:
-    def __init__(self, robot):
+    def __init__(self, robot : mecademicpy.robot, switch : VacuumSwitch):
         self.rbt = robot
+        self.switch = switch
     
     def pressButton(self):
         #RESET ROBOT
@@ -38,7 +40,8 @@ class SOP16:
         print("component grabbed")
 
     def flux(self):
-        self.rbt.MoveJoints(63.82759,47.56629,-37.65569,85.16172,-64.25638,-78.9819)#upflux
+        self.rbt.MoveJoints(63.82759,47.56629,-37.65569,85.16172,-64.25638,-78.9819)#upflux - right above the flux
+        self.switch.assert_state(True)
         self.rbt.MoveLinRelWrf(0,0,-44,0,0,0)
         self.rbt.Delay(.5)
         self.rbt.MoveLinRelWrf(0,0,50,0,0,0)
@@ -53,8 +56,9 @@ class SOP16:
     def solder(self):
         print("solder process started")
         self.rbt.SetJointVel(55)
-        self.rbt.MoveJoints(16.38724,26.13543,22.60319,21.36569,-50.75017,-13.90172)
-        self.rbt.MoveLinRelWrf(0,0,-2.3,0,0,0)
+        self.rbt.MoveJoints(16.38724,26.13543,22.60319,21.36569,-50.75017,-13.90172) #right before soldering
+        self.switch.assert_state(True)
+        self.rbt.MoveLinRelWrf(0,0,-2.3,0,0,0) # set correct elevation
         self.rbt.SetCartLinVel(60)
         self.rbt.MoveLinRelWrf(0, -55, 0, 0, 0, 0) #75 goes all the way through
         self.rbt.SetJointVel(10)
