@@ -61,6 +61,10 @@ except KeyboardInterrupt:
     robot.PauseMotion() #experimental, said to completely interrupt the robot.
     robot.ClearMotion()
     print("\nManually Exited With CTRL+C")
+except AssertionError:
+    #beep
+    print("No part on when it should have been")
+    input(":")
 except Exception as e:
     print(f"Unknown Exception \"{e}\" happened, exiting.")
     print("######## START TRACEBACK")
