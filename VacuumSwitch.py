@@ -1,18 +1,13 @@
-import serial
-
+from RPi import GPIO
 class VacuumSwitch:
     def __init__(self):
         #pin is the BOARD number of the pi
         try:
-            self.ser = serial.Serial('/dev/ttyACM0', 9600)
-        except:
-            print("error setting up the connection")
-
+            GPIO.setmode(GPIO.BOARD)
+            GPIO.setup(7, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        except Exception:
+           print("error setting up the connection")
     def read_state(self):
-        self.ser.write(b'1')
-        state = self.ser.read()
-        print(f'state: {state.decode()}')
-        if int(state.decode()) == 1:
-            return True
-        else:
-            return False
+        return GPIO.input(7)
+    def cleanup():
+        GPIO.cleanup()
