@@ -30,7 +30,7 @@ except Exception:
     sys.exit()
 
 
-component = SOP16(robot)
+component = SOP16(robot, switch)
 robot.ActivateAndHome()
 
 try:
