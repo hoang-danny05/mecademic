@@ -8,9 +8,12 @@ from VacuumSwitch import VacuumSwitch
 import traceback
 #use python -m main
 
-############################################
-#TODO: MAKE ROBOT ASYNC FOR BETTER STOPPAGE
-############################################
+#################################
+# NOTE: INITIALIZATION FOR NEEDED OJBECTS
+#################################
+
+switch = VacuumSwitch()
+
 try:
     robot = MecademicRobot.Robot()
     # print(robot.IsConnected())
@@ -23,9 +26,9 @@ except TimeoutError:
     sys.exit()
 except Exception:
     traceback.print_exc()
+    switch.cleanup()
     sys.exit()
 
-switch = VacuumSwitch()
 
 component = SOP16(robot)
 robot.ActivateAndHome()
@@ -78,4 +81,6 @@ except Exception:
     traceback.print_exc()
     print("robot interrupted during deactivation.") 
 # robot.DeactivateRobot()
+
 robot.Disconnect()
+switch.cleanup()
