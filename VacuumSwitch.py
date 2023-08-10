@@ -35,8 +35,6 @@ class VacuumSwitch:
                 GPIO.output(11, False)
                 raise AssertionError("The robot's part state was not expected")
             except KeyboardInterrupt:
-                raise AssertionError("The robot has been exited out of the error state")
-    
     def start_alarm(self):
         self.setup()
         GPIO.output(11, True)
