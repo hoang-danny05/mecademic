@@ -1,6 +1,6 @@
 import mecademicpy.robot as MecademicRobot
 import mecademicpy.robot_classes  
-from SOP16 import SOP16
+from BGAsm import BGAsm
 import sys
 from time import sleep
 from VacuumSwitch import VacuumSwitch
@@ -30,7 +30,7 @@ except Exception:
     sys.exit()
 
 
-component = SOP16(robot, switch)
+component = BGAsm(robot, switch)
 robot.ActivateAndHome()
 
 ###################################
@@ -55,10 +55,8 @@ try:
         print(f"Starting Loop {i+1}")
         component.pressButton()
         component.grabComp()
-        switch.assert_state(True)
         component.flux()
-        switch.assert_state(True)
-        # #component.preheat()
+        # #component.preheat() #one day
         component.solder()
         component.drop()
 except KeyboardInterrupt:

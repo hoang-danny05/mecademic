@@ -12,6 +12,7 @@ from RPi import GPIO
 class VacuumSwitch:
     def __init__(self):
         self.setup()
+        GPIO.output(11, False)
 
     def setup(self):
         #pin is the BOARD number of the pi
@@ -28,14 +29,7 @@ class VacuumSwitch:
     
     def assert_state(self, partOn: bool): #TRUE if there should be a part ON
         if not (self.read_state() == partOn):
-            try:
-                self.setup()
-                GPIO.output(11, True)
-                input("ERROR: NO PART ON ROBOT, FIX NOW.")
-                GPIO.output(11, False)
-                raise AssertionError("The robot's part state was not expected")
-            except KeyboardInterrupt:
-                print("Exited out of error with CTRL+C")
+            raise AssertionError("The robot's part state was not expected")
     
     def start_alarm(self):
         self.setup()

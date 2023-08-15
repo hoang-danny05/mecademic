@@ -1,14 +1,16 @@
 import mecademicpy.robot
+from VacuumSwitch import VacuumSwitch
 
-#class for the SOP16 component (2 sets of 8 terminals)
+#class for the BGA component deballing
 class BGAsm:
-    def __init__(self, robot):
+    def __init__(self, robot : mecademicpy.robot, switch : VacuumSwitch):
         self.rbt = robot
-
+        self.switch = switch
     
     def pressButton(self):
         #RESET ROBOT
         self.rbt.SetJointVel(100)
+        #NOTE: The robot may be moving too fast here, causing feeder failure
         self.rbt.MoveJoints(89.60276,58.61276,-9.38405,2.50345,-47.11293,-90)
         #right above, change position to boop
         self.rbt.MoveJoints(89.60534,67.08336,-11.71448,2.29293,-53.24948,-90.81724)
@@ -24,12 +26,16 @@ class BGAsm:
         self.rbt.SetCartLinVel(175) # this also applies to te flux btw
         self.rbt.MoveLinRelWrf(0,0,100,0,0,0)
         self.rbt.SetJointVel(100)
+        self.switch.assert_state(True)
 
     def flux(self):
-        self.rbt.MoveJoints(63.82759,47.56629,-37.65569,85.16172,-64.25638,-78.9819)#upflux
-        # self.rbt.MoveLinRelWrf(0,0,-47.5,0,0,0)
-        # self.rbt.Delay(.5)
-        # self.rbt.MoveLinRelWrf(0,0,50,0,0,0)
+        # self.rbt.MoveJoints(63.82759,47.56629,-37.65569,85.16172,-64.25638,-78.9819)#upflux wo bowl
+        self.rbt.MoveJoints(57.29897,46.60759,-35.81043,83.13879,-57.9569,-77.22931) #new upflux with bowl
+        self.switch.assert_state(True)
+        self.rbt.MoveLinRelWrf(0,0,-32,0,0,0) #downflux (pre-bowl: -47.5)
+        self.rbt.Delay(.5)
+        self.rbt.MoveLinRelWrf(0,0,50,0,0,0)
+        self.switch.assert_state(True)
         
     def solder(self):
         self.rbt.SetJointVel(55)
