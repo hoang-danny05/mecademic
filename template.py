@@ -1,78 +1,62 @@
 import mecademicpy.robot
+from VacuumSwitch import VacuumSwitch
 
-#class for the SOP16 component (2 sets of 8 terminals)
-class component:
-    def __init__(self, robot):
+#Class based off of SOP16
+class TemplateClass:
+    def __init__(self, robot : mecademicpy.robot, switch : VacuumSwitch):
         self.rbt = robot
+        self.switch = switch
     
     def pressButton(self):
-        #must be calibrated for parts
+        #RESET ROBOT
+        self.rbt.SetCartLinVel() # this also applies to te flux btw
+        self.rbt.SetJointVel()
         self.rbt.MoveJoints()
-        
-        #right above, change velocity to boop
+        #right above, change position to boop
         self.rbt.MoveJoints()
-        print()
+        print("button pressed")
     
     def grabComp(self):
         #test
-        self.rbt.MoveJoints()
         #is right above, going to grab.
         self.rbt.MoveJoints()
-        self.rbt.SetValveState(1, 0)
         #picked up, go straight up
+        self.rbt.SetJointVel()
         self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
+        self.rbt.SetValveState()
+        self.rbt.Delay()
+        self.rbt.MoveLinRelWrf()
+        self.rbt.SetJointVel()
         print("component grabbed")
 
     def flux(self):
-        #150mm tall flux bowl
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
+        self.rbt.MoveJoints()#upflux - right above the flux
+        self.switch.assert_state(True)
+        self.rbt.MoveLinRelWrf()
+        self.rbt.Delay()
+        self.rbt.MoveLinRelWrf()
+        # self.rbt.MoveJoints()
         print("component fluxxed")
-
-    def preheat(self):
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        print("preheat done")
 
     def solder(self):
         print("solder process started")
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
+        self.rbt.SetJointVel(55)
+        self.rbt.MoveJoints(16.38724,26.13543,22.60319,21.36569,-50.75017,-13.90172) #right before soldering
+        self.switch.assert_state(True)
+        self.rbt.MoveLinRelWrf(0,0,-2.3,0,0,0) # set correct elevation
+        self.rbt.SetCartLinVel(60)
+        self.rbt.MoveLinRelWrf(0, -55, 0, 0, 0, 0) #75 goes all the way through
+        self.rbt.SetJointVel(10)
+        self.rbt.MoveJointsRel(0,0,0,0,0,-40)
+        self.rbt.SetJointVel(55)
+        # self.rbt.MoveLinRelWrf(0, 0, 20, -30, 0, 0) #jared movement
         print("solder process done")
 
     def drop(self):
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
-        self.rbt.MoveJoints()
+        self.rbt.SetJointVel(100)
+        self.rbt.MoveJoints(-48.97319,46.6275,-18.48647,-67.68828,-54.63259,54.66379)
+        #random pos time
+        self.rbt.SetValveState(0,0)
+        self.rbt.MoveJoints(90,10.33345,9.92922,0,-20.26293,0)
         print("component done, dropped in cleaner.")
         
