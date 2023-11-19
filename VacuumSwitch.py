@@ -27,6 +27,14 @@ class VacuumSwitch:
         self.setup()
         return (not GPIO.input(7))
     
+    def assert_on(self): #TRUE if there should be a part ON
+        if not (self.read_state()):
+            raise AssertionError("The robot's part state was not expected")
+
+    def assert_on(self): #TRUE if there should be a part ON
+        if not (self.read_state()):
+            raise AssertionError("The robot's part state was not expected")
+
     def assert_state(self, partOn: bool): #TRUE if there should be a part ON
         if not (self.read_state() == partOn):
             raise AssertionError("The robot's part state was not expected")

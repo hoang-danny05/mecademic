@@ -53,12 +53,18 @@ try:
     print(robot.GetJoints())
     for i in range(loops): #You know what to do >:] (try 500 at a time) doing 100 + 108+53
         print(f"Starting Loop {i+1}")
+        ##########################################################################################
+        # Start of all blocks of code that will execute [loop] times.
+        ##########################################################################################
         component.pressButton()
         component.grabComp()
         component.flux()
         # #component.preheat() #one day
         component.solder()
         component.drop()
+        ##########################################################################################
+        # End of block
+        ##########################################################################################
 except KeyboardInterrupt:
     robot.PauseMotion() #experimental, said to completely interrupt the robot.
     robot.ClearMotion()
