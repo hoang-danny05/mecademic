@@ -31,8 +31,8 @@ class VacuumSwitch:
         if not (self.read_state()):
             raise AssertionError("The robot's part state was not expected")
 
-    def assert_on(self): #TRUE if there should be a part ON
-        if not (self.read_state()):
+    def assert_off(self): #TRUE if there should be a part ON
+        if (self.read_state()):
             raise AssertionError("The robot's part state was not expected")
 
     def assert_state(self, partOn: bool): #TRUE if there should be a part ON
