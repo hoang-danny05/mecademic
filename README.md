@@ -1,4 +1,5 @@
-# Using the mecademic library
+# Easy Mecademic Programming for Hyrel
+## Setup
 install mecademicpy (might already be installed)
 ```sh 
 pip install mecademicpy
@@ -12,6 +13,8 @@ MoveJoints(90,0,0,0,0,0)
 
 <code>EDITTHIS.py</code>
 ```python
+class TemplateClass:
+...
     def pressButton(self):
         ##########################################################################################
         # FIRST BLOCK EXECTUED BY main.py
@@ -20,5 +23,6 @@ MoveJoints(90,0,0,0,0,0)
 ...
 ```
 Notes:
-- each method is there only for organization purposes. 
+- each method is there only for organization purposes.
+- the \_\_init\_\_(...) method should not have any instructions
 - Yes, all you need to do add "self.rbt." to make it into valid python code
