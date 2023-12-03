@@ -1,5 +1,5 @@
 import mecademicpy.robot
-from VacuumSwitch import VacuumSwitch
+from Components.VacuumSwitch import VacuumSwitch
 
 #class for the SOP16 component (2 sets of 8 terminals)
 class SOP16:

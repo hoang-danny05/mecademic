@@ -1,9 +1,9 @@
 import mecademicpy.robot as MecademicRobot
 import mecademicpy.robot_classes  
-from BGAsm import BGAsm
+from Components.BGAsm import BGAsm
 import sys
 from time import sleep
-from VacuumSwitch import VacuumSwitch
+from Components.VacuumSwitch import VacuumSwitch
 #debugging
 import traceback
 #use python -m main

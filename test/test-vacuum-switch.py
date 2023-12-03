@@ -1,4 +1,4 @@
-from VacuumSwitch import VacuumSwitch
+from Components.VacuumSwitch import VacuumSwitch
 import mecademicpy.robot as MecademicRobot
 from time import sleep
 import traceback

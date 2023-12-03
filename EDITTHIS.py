@@ -1,5 +1,5 @@
 import mecademicpy.robot
-from VacuumSwitch import VacuumSwitch
+from Components.VacuumSwitch import VacuumSwitch
 
 #Class based off of SOP16
 class TemplateClass:

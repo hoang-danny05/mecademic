@@ -1,6 +1,6 @@
 import mecademicpy.robot as MecademicRobot
 import mecademicpy.robot_classes  
-from Resistorssm import Resistorssm
+from Components.Resistorssm import Resistorssm
 import sys
 from time import sleep
 #debugging

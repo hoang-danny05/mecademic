@@ -1,5 +1,5 @@
 import mecademicpy.robot
-from VacuumSwitch import VacuumSwitch
+from Components.VacuumSwitch import VacuumSwitch
 
 #class for the BGA component deballing
 class BGAsm:
