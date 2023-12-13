@@ -1,6 +1,6 @@
 import mecademicpy.robot as MecademicRobot
 import mecademicpy.robot_classes  
-from Components.BGAsm import BGAsm
+from Components.BigResistor import BigResistor
 import sys
 from time import sleep
 from Components.VacuumSwitch import VacuumSwitch
@@ -30,7 +30,7 @@ except Exception:
     sys.exit()
 
 
-component = BGAsm(robot, switch)
+component = BigResistor(robot, switch)
 robot.ActivateAndHome()
 
 ###################################
