@@ -2,7 +2,7 @@ import mecademicpy.robot
 from Components.VacuumSwitch import VacuumSwitch
 
 #Class based off of SOP16
-class TemplateClass:
+class BigResistor:
     def __init__(self, robot : mecademicpy.robot, switch : VacuumSwitch):
         ##########################################################################################
         # LOCAL NAMES OF THE ROBOT AND VACCUM SENSOR/SWITCH
@@ -16,6 +16,9 @@ class TemplateClass:
         ##########################################################################################
         #RESET ROBOT
         ### pressbutton ### 12mm
+        SetJointVel(75)
+        SetCartLinVel(100)
+        MoveJoints(90, 0, 0, 0, 0, 0)
         #buttono above
         self.rbt.MoveJoints(118.44233,70.25043,-48.89198,-136.70483,31.49069,137.04052)
         self.rbt.MoveLinRelWrf(0, 0, -13, 0, 0, 0)
@@ -34,13 +37,11 @@ class TemplateClass:
         print("component grabbed")
 
     def flux(self):
-        self.rbt.movejoints(34.26388,27.11716,-19.84707,-43.92569,-5.55259,43.57155)
+        self.rbt.MoveJoints(34.26388,27.11716,-19.84707,-43.92569,-5.55259,43.57155)
         self.switch.assert_on()
         self.rbt.MoveJoints(34.26388,27.15233,0.90517,-9.11483,-25.07121,8.04914)
         self.rbt.Delay(.3)
-        self.rbt.movejoints(34.26388,27.11716,-19.84707,-43.92569,-5.55259,43.57155)
-
-        self.rbt.GetRtJointPos()
+        self.rbt.MoveJoints(34.26388,27.11716,-19.84707,-43.92569,-5.55259,43.57155)
         print("component fluxxed")
 
     def solder(self):
@@ -48,7 +49,7 @@ class TemplateClass:
         self.rbt.MoveJoints(14.02759,15.52448,-7.64043,61.23259,-16.05259,-60.26121)
         self.switch.assert_on()
         self.rbt.SetCartLinVel(75)
-        self.rbt.MoveLinRelWrf(5, 0, -53, 0, 0, 0)
+        self.rbt.MoveLinRelWrf(5, 0, -56.5, 0, 0, 0)
         self.rbt.MoveLinRelWrf(0,-35, 0, 0, 0, 0)
         self.rbt.SetCartLinVel(30)
         self.rbt.MoveLinRelWrf(0, -35, 0, 0, 0, 0)
