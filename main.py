@@ -86,6 +86,15 @@ except Exception as e:
     print("######## START TRACEBACK ########")
     traceback.print_exc()
     print("######## END TRACEBACK ########")
+    robot.PauseMotion() #works btw
+    robot.ClearMotion()
+    try:
+        input("Error. Input to raise arm, cancel to simply home.")
+        robot.MoveLinRelWrf(0, 0, 100, 0, 0, 0)
+    except KeyboardInterrupt:
+        print("Exited with CTRL + C")
+    except Exception:
+        print("danny was dumb. EXITING NOW")
 else: 
     print("Successfully Exited.")
 
