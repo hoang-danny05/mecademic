@@ -1,6 +1,6 @@
 import mecademicpy.robot as MecademicRobot
 import mecademicpy.robot_classes  
-from Components.BigResistor import BigResistor
+from Components.Capacitor_22_20 import Capacitor_22_20 as Component
 import sys
 from time import sleep
 from Components.VacuumSwitch import VacuumSwitch
@@ -13,9 +13,18 @@ import traceback
 #################################
 
 switch = VacuumSwitch()
+robot = MecademicRobot.Robot()
+
+def test_callback(self):
+    for i in range(5): 
+        sleep(1)
+        print(f"test check #{i}")
+
+callbacks: mecademicpy.robot.RobotCallbacks = mecademicpy.robot.RobotCallbacks()
+callbacks.on_checkpoint_reached = test_callback
+robot.RegisterCallbacks(callbacks=callbacks, run_callbacks_in_separate_thread=True)
 
 try:
-    robot = MecademicRobot.Robot()
     # print(robot.IsConnected())
     robot.Connect(address="192.168.0.100", enable_synchronous_mode=True, disconnect_on_exception=False)
 except mecademicpy.robot_classes.CommunicationError:
@@ -30,7 +39,7 @@ except Exception:
     sys.exit()
 
 
-component = BigResistor(robot, switch)
+component = Component(robot, switch)
 robot.ActivateAndHome()
 
 ###################################

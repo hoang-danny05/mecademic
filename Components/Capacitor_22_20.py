@@ -3,20 +3,20 @@ import mecademicpy.robot as mecarbt
 from Components.VacuumSwitch import VacuumSwitch
 
 #Class based off of SOP16
-class BigResistor:
+class Capacitor_22_20:
+    """
+    in memory of big resistor
+    TAPE: 12mm dispenser in the 3rd slot of the machine. 
+    FLUX: small ceramic bowl on top of the large black flux holder
+        2.5 inches from the inner edge from both sides of the hakko sides
+        flux level really low
+    """
     def __init__(self, robot : mecarbt.Robot, switch : VacuumSwitch):
         ##########################################################################################
         # LOCAL NAMES OF THE ROBOT AND VACCUM SENSOR/SWITCH
         ##########################################################################################
         self.rbt: mecarbt.Robot = robot
         self.switch: VacuumSwitch = switch
-        callbacks: mecarbt.RobotCallbacks = mecarbt.RobotCallbacks()
-        callbacks.on_checkpoint_reached = self.test_callback
-        self.rbt.RegisterCallbacks(callbacks=callbacks, run_callbacks_in_separate_thread=True)
-
-    def test_callback(self):
-        for i in range(5): 
-            print(f"test check #{i}")
     
     def pressButton(self):
         ##########################################################################################
@@ -58,17 +58,17 @@ class BigResistor:
         print("solder process started")
         self.rbt.MoveJoints(14.02759,15.52448,-7.64043,61.23259,-16.05259,-60.26121)
         ##check 1: hold on! wave is going!!
-        self.rbt.setCheckpoint(1)
+        self.rbt.SetCheckpoint(1)
         self.switch.assert_on()
         self.rbt.SetCartLinVel(150)
         self.rbt.MoveLinRelWrf(5, 0, -57.25, 0, 0, 0)
         self.rbt.SetCartLinVel(30)
         self.rbt.MoveLinRelWrf(0,-38.5, 0, 0, 0, 0)
         self.rbt.Delay(.8)
-        self.rby.SetCartLinVel(10)
+        self.rbt.SetCartLinVel(10)
         self.rbt.MoveLinRelWrf(0, 0, 12, 0, 0, 0)
         ##check 2: outside  wave
-        self.rbt.setCheckpoint(2)
+        self.rbt.SetCheckpoint(2)
         self.rbt.SetCartLinVel(75)
         # self.rbt.MoveLinRelWrf(0, 0, 20, -30, 0, 0) #jared movement
         print("solder process done")
