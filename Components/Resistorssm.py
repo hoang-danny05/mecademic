@@ -2,7 +2,7 @@ import mecademicpy.robot
 # from VacuumSwitch import VacuumSwitch
 
 #Class based off of SOP16
-class Resistorsm:
+class Component:
     """
     Deprecated
     Wrong Nozzle

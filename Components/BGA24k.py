@@ -1,7 +1,7 @@
 import mecademicpy.robot
 
 #class for the SOP16 component (2 sets of 8 terminals)
-class BGA:
+class Component:
     def __init__(self, robot):
         self.rbt = robot
 

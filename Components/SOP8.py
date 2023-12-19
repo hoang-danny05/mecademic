@@ -3,7 +3,7 @@ import mecademicpy.robot as mecarbt
 from Components.VacuumSwitch import VacuumSwitch
 
 #Class based off of SOP16
-class Capacitor_22_20:
+class Component:
     """
     FEEDER: SOP 8 tube dispenser in the second-most right position
     FLUX: small ceramic bowl on top of the large black flux holder

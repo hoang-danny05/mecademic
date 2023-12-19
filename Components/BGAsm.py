@@ -2,7 +2,7 @@ import mecademicpy.robot
 from Components.VacuumSwitch import VacuumSwitch
 
 #class for the BGA component deballing
-class BGAsm:
+class Component:
     """
     Deprecated
     Wrong Flux Container

@@ -1,6 +1,6 @@
 import mecademicpy.robot as MecademicRobot
 import mecademicpy.robot_classes  
-from Components.SOP8 import SOP8 as Component
+from Components.SOP8 import Component
 import sys
 from time import sleep
 from Components.VacuumSwitch import VacuumSwitch
