@@ -3,6 +3,11 @@ from Components.VacuumSwitch import VacuumSwitch
 
 #class for the SOP16 component (2 sets of 8 terminals)
 class SOP16:
+    """
+    Deprecated
+    Wrong Nozzle 
+    Wrong Fluxer
+    """
     def __init__(self, robot : mecademicpy.robot, switch : VacuumSwitch):
         self.rbt = robot
         self.switch = switch

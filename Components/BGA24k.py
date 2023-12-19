@@ -7,6 +7,11 @@ class BGA:
 
     
     def pressButton(self):
+        """
+        Deprecated
+        Wrong nozzle
+        No Vacuum Sensor
+        """
         #RESET ROBOT
         self.rbt.SetJointVel(100)
         self.rbt.MoveJoints(90,0,0,0,0,-90)

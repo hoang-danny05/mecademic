@@ -3,6 +3,11 @@ from Components.VacuumSwitch import VacuumSwitch
 
 #class for the BGA component deballing
 class BGAsm:
+    """
+    Deprecated
+    Wrong Flux Container
+    Wrong Vacuum Nozzle
+    """
     def __init__(self, robot : mecademicpy.robot, switch : VacuumSwitch):
         self.rbt = robot
         self.switch = switch

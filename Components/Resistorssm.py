@@ -3,6 +3,12 @@ import mecademicpy.robot
 
 #Class based off of SOP16
 class Resistorsm:
+    """
+    Deprecated
+    Wrong Nozzle
+    Wrong fluxer
+    No Switch
+    """
     def __init__(self, robot : mecademicpy.robot):
         self.rbt = robot
         # self.switch = switch

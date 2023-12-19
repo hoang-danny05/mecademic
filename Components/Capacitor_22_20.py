@@ -6,7 +6,8 @@ from Components.VacuumSwitch import VacuumSwitch
 class Capacitor_22_20:
     """
     in memory of big resistor
-    TAPE: 12mm dispenser in the 3rd slot of the machine. 
+    TAPE: 12mm button dispenser in the 3rd slot to the left. 
+        part was at the red line (probably gone now)
     FLUX: small ceramic bowl on top of the large black flux holder
         2.5 inches from the inner edge from both sides of the hakko sides
         flux level really low

@@ -1,9 +1,8 @@
 import mecademicpy.robot as MecademicRobot
 import mecademicpy.robot_classes  
-from Components.Capacitor_22_20 import Capacitor_22_20 as Component
+from Components.Resistorssm import Resistorsm as Component
 import sys
 from time import sleep
-from Components.VacuumSwitch import VacuumSwitch
 #debugging
 import traceback
 #use python -m main
@@ -12,7 +11,6 @@ import traceback
 # NOTE: INITIALIZATION FOR NEEDED OJBECTS
 #################################
 
-switch = VacuumSwitch()
 robot = MecademicRobot.Robot()
 
 def test_callback(self):
@@ -35,11 +33,10 @@ except TimeoutError:
     sys.exit()
 except Exception:
     traceback.print_exc()
-    switch.cleanup()
     sys.exit()
 
 
-component = Component(robot, switch)
+component = Component(robot)
 robot.ActivateAndHome()
 
 ###################################
@@ -83,12 +80,10 @@ except AssertionError:
     robot.PauseMotion() #works btw
     robot.ClearMotion()
     # beep and wait for hooman
-    switch.start_alarm()
     try:
         input("Robot missing part, Press any key to exit:")
     except KeyboardInterrupt:
         print("Exited with CTRL + C")
-    switch.stop_alarm()
     print("exited, returning to normal position. ")
 except Exception as e:
     print(f"Unknown Exception \"{e}\" happened, exiting.")
@@ -125,4 +120,3 @@ except Exception:
 
 #should ALWAYS execute on exit
 robot.Disconnect()
-switch.cleanup()
