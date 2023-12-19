@@ -3,7 +3,7 @@ import mecademicpy.robot as mecarbt
 from Components.VacuumSwitch import VacuumSwitch
 
 #Class based off of SOP16
-class Capacitor_22_20:
+class Component:
     """
     in memory of big resistor
     TAPE: 12mm button dispenser in the 3rd slot to the left. 
