@@ -5,11 +5,12 @@ from Components.VacuumSwitch import VacuumSwitch
 #Class based off of SOP16
 class Component:
     """
-    FEEDER: SOP 8 tube dispenser in the second-most right position
+    FEEDER: SOP 14 tube dispenser in the third right-most tube position
     FLUX: small ceramic bowl on top of the large black flux holder
         2.5 inches from the inner edge from both sides of the hakko sides
         flux level really low
     DROP: fluxer that hangs off of the DI container
+    note: small differences from SOIC 8
     """
     def __init__(self, robot : mecarbt.Robot, switch : VacuumSwitch):
         ##########################################################################################
@@ -32,14 +33,14 @@ class Component:
     
     def grabComp(self):
         #//new pick up
-        self.rbt.MoveJoints(70.46095,31.76819,18.8144,-24.67345,-53.24431,15.37069)
+        self.rbt.MoveJoints(74.97828,31.12216,19.89207,-19.04483,-52.58741,11.8465)
         self.rbt.MoveLinRelWrf(0, 0, -11.25, 0, 0, 0)
         self.rbt.SetValveState(1)
         self.rbt.Delay(.3)
         print("component grabbed")
 
     def flux(self):
-        self.rbt.SetCartLinVel(5000)
+        self.rbt.SetCartLinVel(1000)
         self.rbt.MoveLinRelWrf(0, 0, 100, 0, 0, 0)
         #// robot at 47.08707,18.72905,-4.39034,-75.08431,-44.80034,69.42328
         self.rbt.MoveJoints(50.13491,45.08948,-48.0494,92.46931,-50.19828,-93.85345)
@@ -60,20 +61,24 @@ class Component:
         #//travel
         self.switch.assert_on()
         self.rbt.SetCartLinVel(150)
-        self.rbt.MoveLinRelWrf(26, -140, 0, 0, 0, 0)
-        self.rbt.MoveLinRelWrf(0, 0, 0, -20, 0, 0)
+        self.rbt.MoveLinRelWrf(26, -140, -20, 0, 0, 0)
+        #test optimization 
         self.rbt.SetCartLinVel(50)
         #//solder dunk
         #//assert on 
         self.switch.assert_on()
-        self.rbt.MoveLinRelWrf(0, 0, -47, 0, 0, 0)
-        self.rbt.Delay(.8)
-        self.rbt.MoveLinRelWrf(0, 0, 47, 0, 0, 0)
+        self.rbt.MoveLinRelWrf(0, 0, -48, 0, 0, 0)
+        self.rbt.Delay(.4)
+        self.rbt.MoveLinRelWrf(-1, 0, 0, 0, 0, 0)
+        self.rbt.Delay(.4)
+        self.rbt.MoveLinRelWrf(0, 0, 48, 0, 0, 0)
         self.rbt.MoveLinRelWrf( 0,  -50,  0,  40,  0, 0 )
         #//assert on
         self.switch.assert_on()
         self.rbt.MoveLinRelWrf(0, 0, -47, 0, 0, 0)
-        self.rbt.Delay(.8)
+        self.rbt.Delay(.4)
+        self.rbt.MoveLinRelWrf(1, 0, 0, 0, 0, 0)
+        self.rbt.Delay(.4)
         self.rbt.MoveLinRelWrf(0, 0, 47, 0, 0, 0)
         print("solder process done")
 
