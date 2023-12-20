@@ -6,6 +6,9 @@ class Style:
     reverse = '\033[07m'
     strikethrough = '\033[09m'
     invisible = '\033[08m'
+
+    def clear_line():
+        print(" "*50, end="\r")
  
 class Foreground:
     black = '\033[30m'

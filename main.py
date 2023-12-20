@@ -1,6 +1,6 @@
 import mecademicpy.robot as MecademicRobot
 import mecademicpy.robot_classes  
-from Components.SOIC8 import Component
+from Components.SOIC14 import Component
 import sys
 from time import sleep
 from lib.OutputStyle import Foreground, Style
@@ -87,11 +87,18 @@ except AssertionError:
     # beep and wait for hooman
     switch.start_alarm()
     try:
-        print(Style.bold, Foreground.orange, "Robot missing part.", Style.underline, Foreground.red, "CTRL+C for return", Foreground.orange, " or ENTER to lift")
+        print(Style.bold, Foreground.orange, "Robot missing part.", Foreground.red, Style.underline, "CTRL+C to return", Foreground.orange, "or ENTER to lift", end="")
         input(f":{Style.reset}")
         robot.MoveLinRelWrf(0, 0, 100, 0, 0, 0)
     except KeyboardInterrupt:
         print(Style.bold, "Exited", Style.reset)
+    except mecademicpy.robot_classes.InterruptException:
+        robot.ResetError()
+        robot.ResumeMotion()
+        try: 
+            robot.MoveLinRelWrf(0, 0, 10, 0, 0, 0)
+        except Exception:
+            pass
     switch.stop_alarm()
     print("exited, returning to normal position. ")
 except Exception as e:

@@ -13,9 +13,9 @@ class Component(Logger):
         2.5 inches from the inner edge from both sides of the hakko sides
         flux level really low
     DROP: fluxer that hangs off of the DI container
-    END EFFECTOR: New vacuum that isn't on correctly 
-    note: small differences from SOIC 8
-    
+    END EFFECTOR: Long end effector with ~1mm wide tip 
+        must be compliant
+    note: the end effector must be fully on or else it could dip into the solder for bad consequences
     """
     def __init__(self, robot : mecarbt.Robot, switch : VacuumSwitch):
         ##########################################################################################
@@ -39,7 +39,7 @@ class Component(Logger):
     def grabComp(self):
         #//new pick up
         self.rbt.MoveJoints(74.97828,31.12216,19.89207,-19.04483,-52.58741,11.8465)
-        self.rbt.MoveLinRelWrf(0, 0, -11.25, 0, 0, 0)
+        self.rbt.MoveLinRelWrf(0, 0, -11.75, 0, 0, 0)
         self.rbt.SetValveState(1)
         self.rbt.Delay(.3)
         self.log("component grabbed")
@@ -72,19 +72,19 @@ class Component(Logger):
         #//solder dunk
         #//assert on 
         self.switch.assert_on()
-        self.rbt.MoveLinRelWrf(0, 0, -47, 0, 0, 0)
+        self.rbt.MoveLinRelWrf(0, 0, -48, 0, 0, 0)
         self.rbt.Delay(.4)
         self.rbt.MoveLinRelWrf(-1, 0, 0, 0, 0, 0)
         self.rbt.Delay(.4)
-        self.rbt.MoveLinRelWrf(0, 0, 47, 0, 0, 0)
+        self.rbt.MoveLinRelWrf(0, 0, 48, 0, 0, 0)
         self.rbt.MoveLinRelWrf( 0,  -50,  0,  40,  0, 0 )
         #//assert on
         self.switch.assert_on()
-        self.rbt.MoveLinRelWrf(0, 0, -47, 0, 0, 0)
+        self.rbt.MoveLinRelWrf(0, 0, -47.5, 0, 0, 0)
         self.rbt.Delay(.4)
         self.rbt.MoveLinRelWrf(1, 0, 0, 0, 0, 0)
         self.rbt.Delay(.4)
-        self.rbt.MoveLinRelWrf(0, 0, 47, 0, 0, 0)
+        self.rbt.MoveLinRelWrf(0, 0, 47.5, 0, 0, 0)
         self.log("solder process done")
 
     def drop(self):
