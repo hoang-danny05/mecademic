@@ -16,6 +16,7 @@ class Component(Logger):
     END EFFECTOR: Long end effector with ~1mm wide tip 
         must be compliant
     note: the end effector must be fully on or else it could dip into the solder for bad consequences
+        literally the same as SOIC14 
     """
     def __init__(self, robot : mecarbt.Robot, switch : VacuumSwitch):
         ##########################################################################################

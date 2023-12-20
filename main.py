@@ -1,6 +1,6 @@
 import mecademicpy.robot as MecademicRobot
 import mecademicpy.robot_classes  
-from Components.SOIC14 import Component
+from Components.SOIC16 import Component
 import sys
 from time import sleep
 from lib.OutputStyle import Foreground, Style
@@ -61,9 +61,9 @@ except Exception as e:
 ##################################
 try:
     print("Starting process..")
-    print(robot.GetJoints(), end="\r")
+    # print(robot.GetJoints(), end="\r")
     for i in range(loops): #You know what to do >:] (try 500 at a time) doing 100 + 108+53
-        print(f"Starting Loop {i+1}")
+        print(f"\rStarting Loop {i+1}")
         ##########################################################################################
         # Start of all blocks of code that will execute [loop] times.
         ##########################################################################################

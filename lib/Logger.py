@@ -4,4 +4,5 @@ class Logger:
         print(message, end="\r")
     
     def finished(self):
+        print(" "*100, end="\r")
         print("DONE")
