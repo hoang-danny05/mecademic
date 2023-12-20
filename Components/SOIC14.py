@@ -1,9 +1,12 @@
 import mecademicpy.robot as mecarbt
+import sys
+sys.path.append("../")
+from lib.Logger import Logger
 
 from Components.VacuumSwitch import VacuumSwitch
 
 #Class based off of SOP16
-class Component:
+class Component(Logger):
     """
     FEEDER: SOP 14 tube dispenser in the third right-most tube position
     FLUX: small ceramic bowl on top of the large black flux holder
@@ -37,7 +40,7 @@ class Component:
         self.rbt.MoveLinRelWrf(0, 0, -11.25, 0, 0, 0)
         self.rbt.SetValveState(1)
         self.rbt.Delay(.3)
-        print("component grabbed")
+        self.log("component grabbed")
 
     def flux(self):
         self.rbt.SetCartLinVel(1000)
@@ -61,17 +64,17 @@ class Component:
         #//travel
         self.switch.assert_on()
         self.rbt.SetCartLinVel(150)
-        self.rbt.MoveLinRelWrf(26, -140, -20, 0, 0, 0)
+        self.rbt.MoveLinRelWrf(26, -140, 0, -20, 0, 0)
         #test optimization 
         self.rbt.SetCartLinVel(50)
         #//solder dunk
         #//assert on 
         self.switch.assert_on()
-        self.rbt.MoveLinRelWrf(0, 0, -48, 0, 0, 0)
+        self.rbt.MoveLinRelWrf(0, 0, -47, 0, 0, 0)
         self.rbt.Delay(.4)
         self.rbt.MoveLinRelWrf(-1, 0, 0, 0, 0, 0)
         self.rbt.Delay(.4)
-        self.rbt.MoveLinRelWrf(0, 0, 48, 0, 0, 0)
+        self.rbt.MoveLinRelWrf(0, 0, 47, 0, 0, 0)
         self.rbt.MoveLinRelWrf( 0,  -50,  0,  40,  0, 0 )
         #//assert on
         self.switch.assert_on()
