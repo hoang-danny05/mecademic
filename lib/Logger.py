@@ -1,6 +1,6 @@
 class Logger:
-    def log(message: str):
+    def log(self, message: str):
         print(message, end="\r")
     
-    def finished():
+    def finished(self):
         print("DONE")

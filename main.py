@@ -87,9 +87,11 @@ except AssertionError:
     # beep and wait for hooman
     switch.start_alarm()
     try:
-        input(Style.bold, "Robot missing part, Press any key to exit:", Style.reset)
+        print(Style.bold, Foreground.orange, "Robot missing part.", Style.underline, Foreground.red, "CTRL+C for return", Foreground.orange, " or ENTER to lift")
+        input(f":{Style.reset}")
+        robot.MoveLinRelWrf(0, 0, 100, 0, 0, 0)
     except KeyboardInterrupt:
-        print("Exited with CTRL + C")
+        print(Style.bold, "Exited", Style.reset)
     switch.stop_alarm()
     print("exited, returning to normal position. ")
 except Exception as e:
@@ -100,19 +102,20 @@ except Exception as e:
     robot.PauseMotion() #works btw
     robot.ClearMotion()
     try:
-        input("Error. Input to raise arm, cancel to simply home.")
+        print(Style.bold, Style.underline, Foreground.red, "CTRL+C for return", Foreground.orange, " or ENTER to lift")
+        input(f":{Style.reset}")
         robot.MoveLinRelWrf(0, 0, 100, 0, 0, 0)
     except KeyboardInterrupt:
-        print("Exited with CTRL + C")
+        print(Style.bold, "Exited", Style.reset)
     except Exception:
-        print("danny was dumb. EXITING NOW")
+        print(Foreground.pink, "danny was dumb. EXITING NOW", Style.reset)
 else: 
     print(Foreground.green, "Successfully Exited.", Style.reset)
 
 ####################################
 # PROGRAM END
 ####################################
-print("Program finished.")
+print(Style.bold, "Program finished.")
 try:
     robot.ResumeMotion()
     #################################################
@@ -122,7 +125,7 @@ try:
     robot.SetValveState(0, 0)
 except Exception:
     traceback.print_exc()
-    print("robot interrupted during deactivation.") 
+    print(Foreground.red, "robot interrupted during deactivation.") 
 # robot.DeactivateRobot()
 
 #should ALWAYS execute on exit

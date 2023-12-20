@@ -1,15 +1,19 @@
 import mecademicpy.robot as mecarbt
+import sys
+sys.path.append("../")
+from lib.Logger import Logger
 
 from Components.VacuumSwitch import VacuumSwitch
 
 #Class based off of SOP16
-class Component:
+class Component(Logger):
     """
     FEEDER: SOP 8 tube dispenser in the second-most right position
     FLUX: small ceramic bowl on top of the large black flux holder
         2.5 inches from the inner edge from both sides of the hakko sides
         flux level really low
     DROP: fluxer that hangs off of the DI container
+    END EFFECTOR: new nozzle that may or may not be on correctly 
     note: can be a lot more optimal with some position changes, but i'm too lazy to do them
     """
     def __init__(self, robot : mecarbt.Robot, switch : VacuumSwitch):
@@ -37,7 +41,7 @@ class Component:
         self.rbt.MoveLinRelWrf(0, 0, -11.25, 0, 0, 0)
         self.rbt.SetValveState(1)
         self.rbt.Delay(.3)
-        print("component grabbed")
+        self.log("component grabbed")
 
     def flux(self):
         self.rbt.SetCartLinVel(5000)
@@ -52,10 +56,10 @@ class Component:
         self.rbt.Delay(.3)
         self.rbt.MoveLinRelWrf(0,0,47.5,0,0,0)
         self.switch.assert_on()
-        print("component fluxxed")
+        self.log("component fluxxed")
 
     def solder(self):
-        print("solder process started")
+        self.log("solder process started")
         #//offset: y=-30, alpha=20
         #//solder time
         #//travel
@@ -76,7 +80,7 @@ class Component:
         self.rbt.MoveLinRelWrf(0, 0, -47, 0, 0, 0)
         self.rbt.Delay(.8)
         self.rbt.MoveLinRelWrf(0, 0, 47, 0, 0, 0)
-        print("solder process done")
+        self.log("solder process done")
 
     def drop(self):
         self.rbt.MoveJoints(-47.61233,46.67767,-38.22543,-82.35828,-48.18155,78.62414)
