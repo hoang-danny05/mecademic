@@ -17,6 +17,7 @@ class Component(Logger):
         must be compliant
     note: the end effector must be fully on or else it could dip into the solder for bad consequences
         literally the same as SOIC14 
+        update: added a second dip thatis better than the SOIC version, but is also interchangable
     """
     def __init__(self, robot : mecarbt.Robot, switch : VacuumSwitch):
         ##########################################################################################
@@ -78,14 +79,14 @@ class Component(Logger):
         self.rbt.MoveLinRelWrf(-1, 0, 0, 0, 0, 0)
         self.rbt.Delay(.4)
         self.rbt.MoveLinRelWrf(0, 0, 48, 0, 0, 0)
-        self.rbt.MoveLinRelWrf( 0,  -50,  0,  40,  0, 0 )
+        self.rbt.MoveLinRelWrf( 0,  -60,  0,  50,  0, 0 )
         #//assert on
         self.switch.assert_on()
-        self.rbt.MoveLinRelWrf(0, 0, -47.5, 0, 0, 0)
+        self.rbt.MoveLinRelWrf(0, 0, -53, 0, 0, 0)
         self.rbt.Delay(.4)
         self.rbt.MoveLinRelWrf(1, 0, 0, 0, 0, 0)
         self.rbt.Delay(.4)
-        self.rbt.MoveLinRelWrf(0, 0, 47.5, 0, 0, 0)
+        self.rbt.MoveLinRelWrf(0, 0, 53, 0, 0, 0)
         self.log("solder process done")
 
     def drop(self):
