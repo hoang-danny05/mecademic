@@ -1,9 +1,12 @@
 import mecademicpy.robot as mecarbt
+import sys
+sys.path.append("../")
+from lib.Logger import Logger
 
 from Components.VacuumSwitch import VacuumSwitch
 
 #Class based off of SOP16
-class Component:
+class Component(Logger):
     """
     in memory of big resistor
     TAPE: 12mm button dispenser in the 3rd slot to the left. 
@@ -11,13 +14,25 @@ class Component:
     FLUX: small ceramic bowl on top of the large black flux holder
         2.5 inches from the inner edge from both sides of the hakko sides
         flux level really low
+    IMPLEMENTS: LOGGER, DEBUG 
     """
-    def __init__(self, robot : mecarbt.Robot, switch : VacuumSwitch):
+    def __init__(self, robot : mecarbt.Robot, switch : VacuumSwitch, **kwargs):
         ##########################################################################################
         # LOCAL NAMES OF THE ROBOT AND VACCUM SENSOR/SWITCH
         ##########################################################################################
         self.rbt: mecarbt.Robot = robot
         self.switch: VacuumSwitch = switch
+        #TODO: make this inherited, not in the code. 
+        for arg, val in kwargs:
+            print(arg)
+            match arg:
+                case "debug":
+                    assert isinstance(val, bool), "Invalid value for debug"
+                    self.debug = val
+                    break
+                case _:
+                    raise ValueError("Invalid KWARG given to the component")
+
     
     def pressButton(self):
         ##########################################################################################
@@ -31,9 +46,10 @@ class Component:
         self.rbt.MoveJoints(90,0,0,0,0,0)
         self.rbt.SetJointVel(60)
         self.rbt.MoveJoints(118.44233,70.25043,-48.89198,-136.70483,31.49069,137.04052)
-        self.rbt.MoveLinRelWrf(0, 0, -13, 0, 0, 0)
-        self.rbt.Delay(.3)
-        self.rbt.MoveLinRelWrf(0, 0, 13, 0, 0, 0)
+        if(not self.debug):
+            self.rbt.MoveLinRelWrf(0, 0, -13, 0, 0, 0)
+            self.rbt.Delay(.3)
+            self.rbt.MoveLinRelWrf(0, 0, 13, 0, 0, 0)
         #//button is done 
     
     def grabComp(self):
@@ -41,26 +57,30 @@ class Component:
         self.rbt.MoveLinRelWrf(-11.5,  -27.5,  0,  0,  0,  0)
         self.rbt.SetCartLinVel(70)
         self.rbt.MoveLinRelWrf(0, 0, -11.5, 0, 0, 0)
-        self.rbt.SetValveState(1)
-        self.rbt.Delay(.2)
+        if (not self.debug):
+            self.rbt.SetValveState(1)
+            self.rbt.Delay(.2)
         self.rbt.MoveLinRelWrf(0, 0, 11.5, 0, 0, 0)
-        self.switch.assert_on()
-        print("component grabbed")
+        if (not self.debug):
+            self.switch.assert_on()
+        self.log("component grabbed")
 
     def flux(self):
         self.rbt.MoveJoints(34.26388,27.11716,-19.84707,-43.92569,-5.55259,43.57155)
-        self.switch.assert_on()
+        if (not self.debug):
+            self.switch.assert_on()
         self.rbt.MoveJoints(34.26388,27.15233,0.90517,-9.11483,-25.07121,8.04914)
         self.rbt.Delay(.3)
         self.rbt.MoveJoints(34.26388,27.11716,-19.84707,-43.92569,-5.55259,43.57155)
-        print("component fluxxed")
+        self.log("component fluxxed")
 
     def solder(self):
-        print("solder process started")
+        self.log("solder process started")
         self.rbt.MoveJoints(14.02759,15.52448,-7.64043,61.23259,-16.05259,-60.26121)
         ##check 1: hold on! wave is going!!
         self.rbt.SetCheckpoint(1)
-        self.switch.assert_on()
+        if (not self.debug):
+            self.switch.assert_on()
         self.rbt.SetCartLinVel(150)
         self.rbt.MoveLinRelWrf(5, 0, -57.25, 0, 0, 0)
         self.rbt.SetCartLinVel(30)
@@ -72,10 +92,14 @@ class Component:
         self.rbt.SetCheckpoint(2)
         self.rbt.SetCartLinVel(75)
         # self.rbt.MoveLinRelWrf(0, 0, 20, -30, 0, 0) #jared movement
-        print("solder process done")
+        self.log("solder process done")
 
     def drop(self):
         self.rbt.MoveJoints(-46.29698,48.49603,-47.96922,-89.49672,-46.29931,89.27155)
         self.rbt.SetValveState(0)
         self.rbt.Delay(1)
-        self.switch.assert_off()
+        if (not self.debug):
+            self.rbt.SetValveState(1)
+            self.switch.assert_off()
+            self.rbt.SetValveState(0)
+            self.finished()
