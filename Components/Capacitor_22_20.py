@@ -23,16 +23,10 @@ class Component(Logger):
         self.rbt: mecarbt.Robot = robot
         self.switch: VacuumSwitch = switch
         #TODO: make this inherited, not in the code. 
-        for arg, val in kwargs:
-            print(arg)
-            match arg:
-                case "debug":
-                    assert isinstance(val, bool), "Invalid value for debug"
-                    self.debug = val
-                    break
-                case _:
-                    raise ValueError("Invalid KWARG given to the component")
-
+        if "debug" in kwargs.keys():
+            val = kwargs["debug"]
+            assert isinstance(val, bool), "Invalid value for debug"
+            self.debug = val
     
     def pressButton(self):
         ##########################################################################################

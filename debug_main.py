@@ -1,8 +1,10 @@
 import mecademicpy.robot as MecademicRobot
 import mecademicpy.robot_classes  
-from Components.Resistorssm import Component
+from Components.Capacitor_22_20 import Component
 import sys
 from time import sleep
+from lib.OutputStyle import Foreground, Style
+from Components.VacuumSwitch import VacuumSwitch
 #debugging
 import traceback
 #use python -m main
@@ -11,9 +13,10 @@ import traceback
 # NOTE: INITIALIZATION FOR NEEDED OJBECTS
 #################################
 
+switch = VacuumSwitch()
 robot = MecademicRobot.Robot()
 
-def test_callback(self):
+def test_callback():
     for i in range(5): 
         sleep(1)
         print(f"test check #{i}")
@@ -26,17 +29,18 @@ try:
     # print(robot.IsConnected())
     robot.Connect(address="192.168.0.100", enable_synchronous_mode=True, disconnect_on_exception=False)
 except mecademicpy.robot_classes.CommunicationError:
-    print("Error Communicating with the robot. Exiting Now.")
+    print(Foreground.red, Style.bold, "Error Communicating with the robot. Exiting Now.")
     sys.exit()
 except TimeoutError:
-    print("Error Communicating with the robot. Exiting Now.")
+    print(Foreground.red, Style.bold, "Error Communicating with the robot. Exiting Now.")
     sys.exit()
 except Exception:
+    print(Foreground.red, Style.bold, "Unknown Error: ", Style.reset)
     traceback.print_exc()
+    switch.cleanup()
     sys.exit()
 
-
-component = Component(robot)
+component = Component(robot, switch, debug=True)
 robot.ActivateAndHome()
 
 ###################################
@@ -45,7 +49,7 @@ robot.ActivateAndHome()
 try:
     loops = int(sys.argv[1]) if len(sys.argv) > 1 else 1 #default amount of loops is 1, else it is the first argument
 except ValueError:
-    print("Wrong type entered, only an integer is accepted. Using default value of 1.")
+    print(Foreground.orange, Style.bold, "Wrong type entered, only an integer is accepted. Using default value of 1.", Style.reset)
     loops = 1
 except Exception as e:
     traceback.print_exc()
@@ -55,10 +59,10 @@ except Exception as e:
 # MAIN ACTIONS
 ##################################
 try:
-    print("Starting Try loop")
-    print(robot.GetJoints())
+    print("Starting process..")
+    # print(robot.GetJoints(), end="\r")
     for i in range(loops): #You know what to do >:] (try 500 at a time) doing 100 + 108+53
-        print(f"Starting Loop {i+1}")
+        print(f"\rStarting Loop {i+1}")
         ##########################################################################################
         # Start of all blocks of code that will execute [loop] times.
         ##########################################################################################
@@ -74,38 +78,50 @@ try:
 except KeyboardInterrupt:
     robot.PauseMotion() #experimental, said to completely interrupt the robot.
     robot.ClearMotion()
-    print("\nManually Exited With CTRL+C")
+    print(Style.bold, "\nManually Exited With CTRL+C", Style.reset)
 except AssertionError:
     # stop right there buster!!
     robot.PauseMotion() #works btw
     robot.ClearMotion()
     # beep and wait for hooman
+    switch.start_alarm()
     try:
-        input("Robot missing part, Press any key to exit:")
+        print(Style.bold, Foreground.orange, "Robot missing part.", Foreground.red, Style.underline, "CTRL+C to return", Foreground.orange, "or ENTER to lift", end="")
+        input(f":{Style.reset}")
+        robot.MoveLinRelWrf(0, 0, 100, 0, 0, 0)
     except KeyboardInterrupt:
-        print("Exited with CTRL + C")
+        print(Style.bold, "Exited", Style.reset)
+    except mecademicpy.robot_classes.InterruptException:
+        robot.ResetError()
+        robot.ResumeMotion()
+        try: 
+            robot.MoveLinRelWrf(0, 0, 10, 0, 0, 0)
+        except Exception:
+            pass
+    switch.stop_alarm()
     print("exited, returning to normal position. ")
 except Exception as e:
-    print(f"Unknown Exception \"{e}\" happened, exiting.")
-    print("######## START TRACEBACK ########")
+    print(Foreground.red, Style.bold, f"Unknown Exception \"{e}\" happened, exiting.")
+    print(Style.reset, Foreground.red, "######## START TRACEBACK ########", Style.reset)
     traceback.print_exc()
-    print("######## END TRACEBACK ########")
+    print(Foreground.red, "######## END TRACEBACK ########", Style.reset)
     robot.PauseMotion() #works btw
     robot.ClearMotion()
     try:
-        input("Error. Input to raise arm, cancel to simply home.")
+        print(Style.bold, Style.underline, Foreground.red, "CTRL+C for return", Foreground.orange, " or ENTER to lift")
+        input(f":{Style.reset}")
         robot.MoveLinRelWrf(0, 0, 100, 0, 0, 0)
     except KeyboardInterrupt:
-        print("Exited with CTRL + C")
+        print(Style.bold, "Exited", Style.reset)
     except Exception:
-        print("danny was dumb. EXITING NOW")
+        print(Foreground.pink, "danny was dumb. EXITING NOW", Style.reset)
 else: 
-    print("Successfully Exited.")
+    print(Foreground.green, "Successfully Exited.", Style.reset)
 
 ####################################
 # PROGRAM END
 ####################################
-print("Program finished.")
+print(Style.bold, "Program finished.")
 try:
     robot.ResumeMotion()
     #################################################
@@ -115,8 +131,9 @@ try:
     robot.SetValveState(0, 0)
 except Exception:
     traceback.print_exc()
-    print("robot interrupted during deactivation.") 
+    print(Foreground.red, "robot interrupted during deactivation.") 
 # robot.DeactivateRobot()
 
 #should ALWAYS execute on exit
 robot.Disconnect()
+switch.cleanup()

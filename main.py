@@ -1,6 +1,6 @@
 import mecademicpy.robot as MecademicRobot
 import mecademicpy.robot_classes  
-from Components.SOIC16 import Component
+from Components.Capacitor_22_20 import Component
 import sys
 from time import sleep
 from lib.OutputStyle import Foreground, Style
@@ -41,6 +41,7 @@ except Exception:
     sys.exit()
 
 
+#debug main here - blue
 component = Component(robot, switch)
 robot.ActivateAndHome()
 
