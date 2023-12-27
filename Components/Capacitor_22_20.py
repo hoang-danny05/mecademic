@@ -22,6 +22,7 @@ class Component(Logger):
         ##########################################################################################
         self.rbt: mecarbt.Robot = robot
         self.switch: VacuumSwitch = switch
+        self.debug = False
         #TODO: make this inherited, not in the code. 
         if "debug" in kwargs.keys():
             val = kwargs["debug"]
@@ -48,24 +49,31 @@ class Component(Logger):
     
     def grabComp(self):
         #//new pick up
-        self.rbt.MoveLinRelWrf(-11.5,  -27.5,  0,  0,  0,  0)
+        self.rbt.MoveLinRelWrf(-11.5,  -26.5,  0,  0,  0,  0)
         self.rbt.SetCartLinVel(70)
         self.rbt.MoveLinRelWrf(0, 0, -11.5, 0, 0, 0)
         if (not self.debug):
             self.rbt.SetValveState(1)
             self.rbt.Delay(.2)
         self.rbt.MoveLinRelWrf(0, 0, 11.5, 0, 0, 0)
+        self.rbt.MoveJoints(90,0,0,0,0,0)
         if (not self.debug):
             self.switch.assert_on()
         self.log("component grabbed")
 
     def flux(self):
-        self.rbt.MoveJoints(34.26388,27.11716,-19.84707,-43.92569,-5.55259,43.57155)
+        self.rbt.SetJointVel(50)
+        self.rbt.MoveJoints(50.13491,45.08948,-48.0494,92.46931,-50.19828,-93.85345)
+        # has moved right above
+        self.rbt.SetJointVel(60)
+        self.rbt.SetCartLinVel(50)
         if (not self.debug):
             self.switch.assert_on()
-        self.rbt.MoveJoints(34.26388,27.15233,0.90517,-9.11483,-25.07121,8.04914)
+        self.rbt.MoveLinRelWrf(0,0,-47.5,0,0,0)
         self.rbt.Delay(.3)
-        self.rbt.MoveJoints(34.26388,27.11716,-19.84707,-43.92569,-5.55259,43.57155)
+        self.rbt.MoveLinRelWrf(0,0,47.5,0,0,0)
+        if (not self.debug):
+            self.switch.assert_on()
         self.log("component fluxxed")
 
     def solder(self):
@@ -76,10 +84,12 @@ class Component(Logger):
         if (not self.debug):
             self.switch.assert_on()
         self.rbt.SetCartLinVel(150)
-        self.rbt.MoveLinRelWrf(5, 0, -57.25, 0, 0, 0)
+        #dip height below, reduced for sanity
+        self.rbt.MoveLinRelWrf(5, 0, -56, 0, 0, 0)
         self.rbt.SetCartLinVel(30)
         self.rbt.MoveLinRelWrf(0,-38.5, 0, 0, 0, 0)
-        self.rbt.Delay(.8)
+        #delay for longer because flux must crawl
+        self.rbt.Delay(2.2)
         self.rbt.SetCartLinVel(10)
         self.rbt.MoveLinRelWrf(0, 0, 12, 0, 0, 0)
         ##check 2: outside  wave

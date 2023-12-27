@@ -16,15 +16,15 @@ import traceback
 switch = VacuumSwitch()
 robot = MecademicRobot.Robot()
 
-def test_callback(self):
-    for i in range(5): 
-        sleep(1)
-        print(f"test check #{i}")
-
-callbacks: mecademicpy.robot.RobotCallbacks = mecademicpy.robot.RobotCallbacks()
-callbacks.on_checkpoint_reached = test_callback
-robot.RegisterCallbacks(callbacks=callbacks, run_callbacks_in_separate_thread=True)
-
+# def test_callback(self):
+#     for i in range(5): 
+#         sleep(1)
+#         print(f"test check #{i}")
+#
+# callbacks: mecademicpy.robot.RobotCallbacks = mecademicpy.robot.RobotCallbacks()
+# callbacks.on_checkpoint_reached = test_callback
+# robot.RegisterCallbacks(callbacks=callbacks, run_callbacks_in_separate_thread=True)
+ 
 try:
     # print(robot.IsConnected())
     robot.Connect(address="192.168.0.100", enable_synchronous_mode=True, disconnect_on_exception=False)
