@@ -1,6 +1,6 @@
 import mecademicpy.robot as MecademicRobot
 import mecademicpy.robot_classes  
-from Components.Capacitor_22_20 import Component
+from Components.LongPart import Component
 import sys
 from time import sleep
 from lib.OutputStyle import Foreground, Style
@@ -70,8 +70,10 @@ try:
         ##########################################################################################
         component.pressButton()
         component.grabComp()
-        component.flux()
         # #component.preheat() #one day
+        component.flux()
+        component.solder()
+        component.flux()
         component.solder()
         component.drop()
         ##########################################################################################
@@ -131,6 +133,7 @@ try:
     #################################################
     robot.MoveJoints(90,0,0,0,0,0)
     robot.SetValveState(0, 0)
+    robot.SetValveState(0)
 except Exception:
     traceback.print_exc()
     print(Foreground.red, "robot interrupted during deactivation.") 

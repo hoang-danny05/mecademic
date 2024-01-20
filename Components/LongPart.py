@@ -40,22 +40,17 @@ class Component(Logger):
         self.rbt.SetCartLinVel(200)
         self.rbt.MoveJoints(90,0,0,0,0,0)
         self.rbt.SetJointVel(100)
-        self.rbt.MoveJoints(109.0694,59.33638,-27.72078,-159.87517,35.85724,159.72328)
-        if(not self.debug and False):
-            self.rbt.MoveLinRelWrf(0, 0, -13, 0, 0, 0)
-            self.rbt.Delay(.3)
-            self.rbt.MoveLinRelWrf(0, 0, 13, 0, 0, 0)
+        self.rbt.MoveLinRelWrf(0, 100, -150, 0, 0, 0)
         #//button is done 
     
     def grabComp(self):
         #//new pick up
-        self.rbt.MoveLinRelWrf(-9,  -31,  0,  0,  0,  0)
         self.rbt.SetCartLinVel(70)
-        self.rbt.MoveLinRelWrf(0, 0, -13, 0, 0, 0)
+        self.rbt.MoveLinRelWrf(0, 1, -23, 0, 0, 0)
         if (not self.debug):
             self.rbt.SetValveState(1)
-            self.rbt.Delay(.2)
-        self.rbt.MoveLinRelWrf(0, 0, 13, 0, 0, 0)
+            self.rbt.Delay(1)
+        self.rbt.MoveLinRelWrf(0, 0, 50, 0, 0, 0)
         self.rbt.SetJointVel(30)
         self.rbt.MoveJoints(90,0,0,0,0,0)
         if (not self.debug):
@@ -64,15 +59,16 @@ class Component(Logger):
 
     def flux(self):
         self.rbt.SetJointVel(30)
-        self.rbt.MoveJoints(50.13491,45.08948,-48.0494,92.46931,-50.19828,-93.85345)
+        self.rbt.MoveJoints(50.13491, 52.4834, -67.20228, 101.97951, -51.68729, -108.89322)
+        #self.rbt.MoveLinRelWrf(0,0,10,0,0,0)
         # has moved right above
         self.rbt.SetJointVel(50)
         self.rbt.SetCartLinVel(50)
         if (not self.debug):
             self.switch.assert_on()
-        self.rbt.MoveLinRelWrf(0,0,-47.5,0,0,0)
+        self.rbt.MoveLinRelWrf(0,0,-29,0,0,0)
         self.rbt.Delay(.3)
-        self.rbt.MoveLinRelWrf(0,0,47.5,0,0,0)
+        self.rbt.MoveLinRelWrf(0,-25,40,15,0,0)
         if (not self.debug):
             self.switch.assert_on()
         self.log("component fluxxed")
@@ -84,29 +80,41 @@ class Component(Logger):
         self.rbt.SetCheckpoint(1)
         if (not self.debug):
             self.switch.assert_on()
+        self.rbt.MoveLinRelWrf(7,-38.5, 0, 0, 0, 0)
         self.rbt.SetCartLinVel(150)
         #dip height below, reduced for sanity
-        self.rbt.MoveLinRelWrf(5, 0, -55, 0, 0, 0)
         self.rbt.SetCartLinVel(30)
-        self.rbt.MoveLinRelWrf(0,-38.5, 0, 0, 0, 0)
-        #delay for longer because flux must crawl
-        self.rbt.Delay(1.5)
-        self.rbt.SetCartLinVel(10)
-        self.rbt.MoveLinRelWrf(0, 0, 12, 0, 0, 0)
+        #45.6 first success
+        #46.15 hits
+        self.rbt.MoveLinRelWrf(0, 0, -46.3, 0, 0, 0)
+        self.rbt.Delay(2.5)
+        self.rbt.SetCartLinVel(15)
+        self.rbt.MoveLinRelWrf(0, 0, 45, 0, 0, 0)
         ##check 2: outside  wave
         self.rbt.SetCheckpoint(2)
         if (not self.debug):
             self.switch.assert_on()
         self.rbt.SetCartLinVel(75)
-        # self.rbt.MoveLinRelWrf(0, 0, 20, -30, 0, 0) #jared movement
         self.log("solder process done")
 
     def drop(self):
-        self.rbt.MoveJoints(-46.29698,48.49603,-47.96922,-89.49672,-46.29931,89.27155)
+        #self.rbt.MoveJoints(0,0,0,0,0,-90)
+        self.rbt.MoveLinRelWrf(10, 0, -30, -90, 0, 0)
+        self.rbt.MoveLinRelWrf(0, -65, -60, 0, 0, 0)
+        #self.rbt.MoveJoints(-46.29698,48.49603,-47.96922,-89.49672,-46.29931,0)
         self.rbt.SetValveState(0)
         self.rbt.Delay(1)
+        self.rbt.SetCartLinVel(5000)
+        self.rbt.MoveLinRelWrf(0, 0, 10, 0, 0, 0)
+        self.rbt.Delay(.01)
+        self.rbt.MoveLinRelWrf(0, 0, -10, 0, 0, 0)
+        self.rbt.Delay(.01)
+        self.rbt.MoveLinRelWrf(0, 0, 10, 0, 0, 0)
+        self.rbt.Delay(.01)
+        self.rbt.MoveLinRelWrf(0, 0, -10, 0, 0, 0)
         if (not self.debug):
             self.rbt.SetValveState(1)
             self.switch.assert_off()
             self.rbt.SetValveState(0)
-            self.finished()
+        self.rbt.MoveLinRelWrf(0, 0, 90, 0, 0, 0)
+        self.finished()

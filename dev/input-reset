@@ -1,2 +1,7 @@
+MoveJoints(90 ,0,0,0,0,0)
 ResetError
 ResumeMotion
+MoveLinRelWrf(0, 0, 0, 0, 0, 0)
+MoveJoints(118.44233,70.25043,-48.89198,-136.70483,31.49069,137.04052)
+MoveLinRelWrf(42.5, 3, 5, 0, 0, 0)
+GetRtJointPos

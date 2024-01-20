@@ -1,6 +1,6 @@
 import mecademicpy.robot as MecademicRobot
 import mecademicpy.robot_classes  
-from Components.Capacitor_22_20 import Component
+from Components.LongPart import Component
 import sys
 from time import sleep
 from lib.OutputStyle import Foreground, Style
@@ -69,7 +69,8 @@ try:
         component.pressButton()
         component.grabComp()
         component.flux()
-        # #component.preheat() #one day
+        component.solder()
+        component.flux()
         component.solder()
         component.drop()
         ##########################################################################################
