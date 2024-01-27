@@ -8,7 +8,6 @@ from Components.VacuumSwitch import VacuumSwitch
 #Class based off of SOP16
 class Component(Logger):
     """
-    in memory of big resistor
     TAPE: 12mm button dispenser in the 3rd slot to the left. 
         part was at the red line (probably gone now)
     FLUX: small ceramic bowl on top of the large black flux holder
