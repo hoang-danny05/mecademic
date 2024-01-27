@@ -40,14 +40,10 @@ except Exception:
     switch.cleanup()
     sys.exit()
 
-
-#debug main here - blue
-component = Component(robot, switch, debug=False)
-robot.ActivateAndHome()
-
 ###################################
-# INPUT HANDLING
+# ARGS HANDLING
 ##################################
+# USAGE: python main.py [LOOPS] [INDEX]
 try:
     loops = int(sys.argv[1]) if len(sys.argv) > 1 else 1 #default amount of loops is 1, else it is the first argument
 except ValueError:
@@ -56,6 +52,30 @@ except ValueError:
 except Exception as e:
     traceback.print_exc()
     loops = 1
+
+try:
+    index = int(sys.argv[2]) if len(sys.argv) > 2 else None #default amount of loops is 1, else it is the first argument
+except ValueError:
+    print(Foreground.orange, Style.bold, "Wrong type entered, only an integer is accepted. Using default value of 1.", Style.reset)
+    index = 1
+except Exception as e:
+    traceback.print_exc()
+    index = 1
+
+##################################
+# COMPONENT INITIALIZATION
+##################################
+
+if index != None:
+    component = Component(robot, switch, debug=False, index=index)
+else:
+    component = Component(robot, switch, debug=False)
+robot.ActivateAndHome()
+
+
+
+
+
 
 ##################################
 # MAIN ACTIONS

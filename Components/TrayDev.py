@@ -23,38 +23,18 @@ class Component(Logger):
         self.rbt: mecarbt.Robot = robot
         self.switch: VacuumSwitch = switch
         self.debug = False
-
-        ##########################################################################################
-        # handling tray attributes        
-        ##########################################################################################
-        self.X_DISTANCE = -15.2
-        self.Y_DISTANCE = 15.5
-        #amount of rows/colums minus 1
-        self.X_COLUMNS = 20
-        self.Y_ROWS = 8
-        self.X_COLUMNS_M1 = 20-1
-        self.Y_ROWS_M1 = 8-1
-        MAX_INDEX = self.X_COLUMNS * self.Y_ROWS
-
         #TODO: make this inherited, not in the code. 
-        #### HANDLING KWARGS
         if "debug" in kwargs.keys():
             val = kwargs["debug"]
             assert isinstance(val, bool), "Invalid value for debug"
             self.debug = val
         if ("index" in kwargs.keys()):
             ind = kwargs["index"]
-            print(f"recieved index: {ind}")
             assert isinstance(ind, int), "Invalid index type passed"
             assert ind >= 0, "Invalid index value"
-            assert ind <= MAX_INDEX, "Invalid index value"
             self.index = ind
         else:
             self.index = 0
-        
-
-    def _toIndex(index: int):
-        pass
     
     def pressButton(self):
         ##########################################################################################
