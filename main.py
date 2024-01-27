@@ -1,6 +1,6 @@
 import mecademicpy.robot as MecademicRobot
 import mecademicpy.robot_classes  
-from Components.LongPart import Component
+from Components.QuadTray import Component
 import sys
 from time import sleep
 from lib.OutputStyle import Foreground, Style
@@ -42,7 +42,7 @@ except Exception:
 
 
 #debug main here - blue
-component = Component(robot, switch)
+component = Component(robot, switch, debug=False)
 robot.ActivateAndHome()
 
 ###################################
@@ -73,8 +73,8 @@ try:
         # #component.preheat() #one day
         component.flux()
         component.solder()
-        component.flux()
-        component.solder()
+        #component.flux()
+        #component.solder()
         component.drop()
         ##########################################################################################
         # End of block
@@ -104,6 +104,11 @@ except AssertionError:
             pass
     switch.stop_alarm()
     print("exited, returning to normal position. ")
+except mecademicpy.robot_classes.InterruptException as e:
+        robot.ResetError()
+        robot.ClearMotion()
+        robot.ResumeMotion()
+        print(Foreground.red, Style.bold, f"Robot Exception \"{e}\" happened, exiting.")
 except Exception as e:
     print(Foreground.red, Style.bold, f"Unknown Exception \"{e}\" happened, exiting.")
     print(Style.reset, Foreground.red, "######## START TRACEBACK ########", Style.reset)

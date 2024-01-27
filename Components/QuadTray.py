@@ -48,7 +48,6 @@ class Component(Logger):
         self.rbt.MoveJoints(90,0,0,0,0,0)
         self.rbt.SetJointVel(50)
         self.rbt.MoveLinRelWrf(0, -25, -150, 0, 0, 0)
-        self.rbt.MoveLinRelWrf(0, 225, -150, 0, 0, 0)
         #//button is done 
     
     def grabComp(self):

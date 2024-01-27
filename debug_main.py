@@ -1,6 +1,6 @@
 import mecademicpy.robot as MecademicRobot
 import mecademicpy.robot_classes  
-from Components.LongPart import Component
+from Components.QuadTray import Component
 import sys
 from time import sleep
 from lib.OutputStyle import Foreground, Style
@@ -24,7 +24,7 @@ robot = MecademicRobot.Robot()
 # callbacks: mecademicpy.robot.RobotCallbacks = mecademicpy.robot.RobotCallbacks()
 # callbacks.on_checkpoint_reached = test_callback
 # robot.RegisterCallbacks(callbacks=callbacks, run_callbacks_in_separate_thread=True)
-
+ 
 try:
     # print(robot.IsConnected())
     robot.Connect(address="192.168.0.100", enable_synchronous_mode=True, disconnect_on_exception=False)
@@ -40,6 +40,8 @@ except Exception:
     switch.cleanup()
     sys.exit()
 
+
+#debug main here - blue
 component = Component(robot, switch, debug=True)
 robot.ActivateAndHome()
 
@@ -68,10 +70,11 @@ try:
         ##########################################################################################
         component.pressButton()
         component.grabComp()
+        # #component.preheat() #one day
         component.flux()
         component.solder()
-        component.flux()
-        component.solder()
+        #component.flux()
+        #component.solder()
         component.drop()
         ##########################################################################################
         # End of block
@@ -101,6 +104,11 @@ except AssertionError:
             pass
     switch.stop_alarm()
     print("exited, returning to normal position. ")
+except mecademicpy.robot_classes.InterruptException as e:
+        robot.ResetError()
+        robot.ClearMotion()
+        robot.ResumeMotion()
+        print(Foreground.red, Style.bold, f"Robot Exception \"{e}\" happened, exiting.")
 except Exception as e:
     print(Foreground.red, Style.bold, f"Unknown Exception \"{e}\" happened, exiting.")
     print(Style.reset, Foreground.red, "######## START TRACEBACK ########", Style.reset)
@@ -130,6 +138,7 @@ try:
     #################################################
     robot.MoveJoints(90,0,0,0,0,0)
     robot.SetValveState(0, 0)
+    robot.SetValveState(0)
 except Exception:
     traceback.print_exc()
     print(Foreground.red, "robot interrupted during deactivation.") 
