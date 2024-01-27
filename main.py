@@ -67,7 +67,7 @@ except Exception as e:
 ##################################
 
 if index != None:
-    component = Component(robot, switch, debug=False, index=index)
+    component = Component(robot, switch, debug=False, index=index - 1)
 else:
     component = Component(robot, switch, debug=False)
 robot.ActivateAndHome()

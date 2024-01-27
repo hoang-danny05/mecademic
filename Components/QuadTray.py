@@ -47,33 +47,22 @@ class Component(Logger):
             print(f"recieved index: {ind}")
             assert isinstance(ind, int), "Invalid index type passed"
             assert ind >= 0, "Invalid index value"
-            assert ind <= MAX_INDEX, "Invalid index value"
+            assert ind < MAX_INDEX, "Invalid index value"
             self.index = ind
         else:
             self.index = 0
         
 
-    def _toIndex(index: int):
-        pass
+    def _moveToIndex(self, index: int):
+        """
+        moves the robot to the cell corresponding to the current position
+        """
+        self.rbt.MoveLinRelWrf(self.X_DISTANCE * (index // self.Y_ROWS), self.Y_DISTANCE * (index % self.Y_ROWS),0 ,0 ,0, 0)
     
-    def pressButton(self):
-        ##########################################################################################
-        # FIRST BLOCK EXECTUED BY main.py
-        ##########################################################################################
-        #RESET ROBOT
-        ### pressbutton ### 12mm
-        #buttono above
-        self.rbt.SetJointVel(100)
-        self.rbt.SetCartLinVel(200)
-        self.rbt.MoveJoints(90,0,0,0,0,0)
-        self.rbt.SetJointVel(50)
-        self.rbt.MoveLinRelWrf(0, -25, -150, 0, 0, 0)
-        #//button is done 
-    
-    def grabComp(self):
-        #//new pick up
-        #self.rbt.MoveLinRelWrf(80, 25.5, 0, 0, 0, 0)
-        self.rbt.MoveJoints(56.4198, 28.02392, 39.36864, -35.7222, -71.32128, 12.97013)
+    def _indexPositions(self): 
+        """
+        development function that tests the robot's ability to go to each spot
+        """
         self.rbt.Delay(.5)
         print(self.rbt.GetJoints())
         self.rbt.Delay(.5)
@@ -89,10 +78,44 @@ class Component(Logger):
             else: 
                 self.rbt.MoveLinRelWrf(0, -1 * Y_DISTANCE * Y_ROWS_M1, 0, 0, 0, 0)
             self.rbt.MoveLinRelWrf(X_DISTANCE, 0, 0, 0, 0, 0)
+
+    def pressButton(self):
+        ##########################################################################################
+        # FIRST BLOCK EXECTUED BY main.py
+        ##########################################################################################
+        #RESET ROBOT
+        ### pressbutton ### 12mm
+        #buttono above
+        self.rbt.SetJointVel(100)
+        self.rbt.SetCartLinVel(200)
+        self.rbt.MoveJoints(90,0,0,0,0,0)
+        self.rbt.SetJointVel(50)
+        self.rbt.MoveJoints(90,0,0,0,90,0)
+        self.rbt.MoveLinRelWrf(0, 90, -65, 0, 0, 0)
+        self.rbt.MoveLinRelWrf(81.5, 0, 0, 0, 0, 0)
+        self.rbt.Delay(1)
+        self._indexPositions()
+
+        raise KeyboardInterrupt
+        #self.rbt.MoveJoints(56.4198, 28.02392, 39.36864, -35.7222, -71.32128, 12.97013)
+        self._moveToIndex(self.index)
+        self.index += 1
+        #//button is done 
+    
+    def grabComp(self):
+        #//new pick up
+        self.rbt.MoveJoints(70,0,0,0,0,0)
+        #self.rbt.MoveLinRelWrf(80, 25.5, 0, 0, 0, 0)
         #//button is done 
         self.log("component grabbed")
 
     def flux(self):
+        self.rbt.MoveJoints(35,30,-30,0,0,0)
+        self.rbt.SetCartLinVel(30)
+        self.rbt.MoveLinRelWrf(0, 0, -40, 0, 0, 0)
+        self.rbt.Delay(.3)
+        self.rbt.MoveLinRelWrf(0, 0, 40, 0, 0, 0)
+        self.rbt.SetCartLinVel(200)
         #self.rbt.SetJointVel(30)
         #self.rbt.MoveJoints(50.13491, 52.4834, -67.20228, 101.97951, -51.68729, -108.89322)
         #self.rbt.MoveLinRelWrf(0,0,10,0,0,0)
@@ -109,6 +132,14 @@ class Component(Logger):
         self.log("component fluxxed")
 
     def solder(self):
+        self.rbt.MoveJoints(0,0,0,0,0,0)
+        self.rbt.MoveLinRelWrf(22, 0, -77, 0, 0, 0)
+        self.rbt.SetCartLinVel(30)
+        self.rbt.MoveLinRelWrf(0, 0, 0, 0, 0, -80)
+        self.rbt.MoveLinRelWrf(0, 0, 0, 0, 0, -80)
+        self.rbt.MoveLinRelWrf(0, 0, 0, 0, 0, -80)
+        self.rbt.Delay(.3)
+        self.rbt.MoveJoints(0,0,0,0,0,0)
         #self.log("solder process started")
         #self.rbt.MoveJoints(14.02759,15.52448,-7.64043,61.23259,-16.05259,-60.26121)
         ##check 1: hold on! wave is going!!
