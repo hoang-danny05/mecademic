@@ -90,6 +90,10 @@ class Component(Logger):
         self._moveToIndex(self.index)
         self.rbt.MoveLinRelWrf(0, 0, -3, 0, 0, 0)
         self.rbt.Delay(.5)
+        if (not self.debug):
+            self.rbt.SetValveState(1)
+            self.rbt.Delay(2)
+            self.switch.assert_on()
         self.rbt.MoveLinRelWrf(0, 0, 3, 0, 0, 0)
         self.index += self.Y_ROWS
         #//button is done 
@@ -107,22 +111,28 @@ class Component(Logger):
         self.rbt.MoveJoints(35,9,0,0,37,0)
         self.rbt.MoveJoints(35,9,0,0,37,270)
         self.rbt.MoveJoints(35,0,0,0,35,0)
-        #if (not self.debug):
-            #self.switch.assert_on()
+        if (not self.debug):
+            self.switch.assert_on()
         self.log("component fluxxed")
 
     def solder(self):
         self.rbt.MoveJoints(0,0,0,0,0,0)
         self.rbt.MoveJoints(0,0,0,0,70,0)
-        #self.rbt.MoveLinRelWrf(55, 0, -13, 0, 0, 0)
+        self.rbt.MoveLinRelWrf(56, 0, -12, 0, 0, 0)
+        loc = self.rbt.GetJoints()
+        if (not self.debug):
+            self.switch.assert_on()
         self.rbt.SetJointVel(10)
-        self.rbt.MoveJoints(0, 23.82717, -23.11536, 0, 69.28819, -80)
-        self.rbt.MoveJoints(0, 23.82717, -23.11536, 0, 69.28819, 180)
-        self.rbt.MoveJoints(0, 23.82717, -23.11536, 0, 69.28819, 270)
+        loc[-1] = -80
+        self.rbt.MoveJoints(loc[0], loc[1], loc[2], loc[3], loc[4], loc[5])
+        loc[-1] = 180
+        self.rbt.MoveJoints(loc[0], loc[1], loc[2], loc[3], loc[4], loc[5])
+        loc[-1] = 270
+        self.rbt.MoveJoints(loc[0], loc[1], loc[2], loc[3], loc[4], loc[5])
         self.rbt.SetJointVel(50)
         self.rbt.Delay(.5)
         print(self.rbt.GetJoints())
-        self.rbt.Delay(3)
+        self.rbt.Delay(.6)
         self.rbt.SetCartLinVel(20)
         self.rbt.MoveLinRelWrf(-30, 0, 0, 0, 0, 0)
         self.rbt.MoveJoints(0,0,0,0,0,0)
@@ -151,8 +161,15 @@ class Component(Logger):
         self.log("solder process done")
 
     def drop(self):
-        self.rbt.MoveJoints(-40,10,0,0,30,0)
+        self.rbt.MoveJoints(-42,15,0,0,20,0)
         self.rbt.MoveLinRelWrf(0, 0, -30, 0, 0, 0)
+        print(self.rbt.GetJoints())
+        if (not self.debug):
+            self.rbt.SetValveState(0)
+            self.rbt.Delay(.5)
+            self.rbt.SetValveState(1)
+            self.switch.assert_off()
+            self.rbt.SetValveState(0)
         self.rbt.Delay(3)
         self.rbt.MoveJoints(-40,0,0,0,0,0)
         #self.rbt.MoveJoints(0,0,0,0,0,-90)
