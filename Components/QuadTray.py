@@ -67,17 +67,8 @@ class Component(Logger):
         print(self.rbt.GetJoints())
         self.rbt.Delay(.5)
         # THE SPOT
-        X_DISTANCE = -15.2
-        Y_DISTANCE = 15.5
-        #amount of rows/colums minus 1
-        X_COLUMNS = 20
-        Y_ROWS_M1 = 8-1
-        for i in range(X_COLUMNS // 2):
-            for i in range(Y_ROWS_M1):
-                self.rbt.MoveLinRelWrf(0, Y_DISTANCE, 0, 0, 0, 0)
-            else: 
-                self.rbt.MoveLinRelWrf(0, -1 * Y_DISTANCE * Y_ROWS_M1, 0, 0, 0, 0)
-            self.rbt.MoveLinRelWrf(X_DISTANCE, 0, 0, 0, 0, 0)
+        for i in range(self.X_COLUMNS // 2):
+            self.rbt.MoveLinRelWrf(self.X_DISTANCE, 0, 0, 0, 0, 0)
 
     def pressButton(self):
         ##########################################################################################
@@ -92,54 +83,50 @@ class Component(Logger):
         self.rbt.SetJointVel(50)
         self.rbt.MoveJoints(90,0,0,0,90,0)
         self.rbt.MoveLinRelWrf(0, 90, -65, 0, 0, 0)
-        self.rbt.MoveLinRelWrf(81.5, 0, 0, 0, 0, 0)
-        self.rbt.Delay(1)
-        self._indexPositions()
+        self.rbt.MoveLinRelWrf(82, -4.5, 0, 0, 0, 0)
+        self.rbt.Delay(.5)
 
-        raise KeyboardInterrupt
         #self.rbt.MoveJoints(56.4198, 28.02392, 39.36864, -35.7222, -71.32128, 12.97013)
         self._moveToIndex(self.index)
-        self.index += 1
+        self.rbt.MoveLinRelWrf(0, 0, -3, 0, 0, 0)
+        self.rbt.Delay(.5)
+        self.rbt.MoveLinRelWrf(0, 0, 3, 0, 0, 0)
+        self.index += self.Y_ROWS
         #//button is done 
     
     def grabComp(self):
         #//new pick up
-        self.rbt.MoveJoints(70,0,0,0,0,0)
+        self.rbt.MoveJoints(70,0,0,0,90,0)
         #self.rbt.MoveLinRelWrf(80, 25.5, 0, 0, 0, 0)
         #//button is done 
         self.log("component grabbed")
 
     def flux(self):
-        self.rbt.MoveJoints(35,30,-30,0,0,0)
-        self.rbt.SetCartLinVel(30)
-        self.rbt.MoveLinRelWrf(0, 0, -40, 0, 0, 0)
-        self.rbt.Delay(.3)
-        self.rbt.MoveLinRelWrf(0, 0, 40, 0, 0, 0)
-        self.rbt.SetCartLinVel(200)
-        #self.rbt.SetJointVel(30)
-        #self.rbt.MoveJoints(50.13491, 52.4834, -67.20228, 101.97951, -51.68729, -108.89322)
-        #self.rbt.MoveLinRelWrf(0,0,10,0,0,0)
-        # has moved right above
-        #self.rbt.SetJointVel(50)
-        #self.rbt.SetCartLinVel(50)
-        #if (not self.debug):
-            #self.switch.assert_on()
-        #self.rbt.MoveLinRelWrf(0,0,-29,0,0,0)
-        #self.rbt.Delay(.3)
-        #self.rbt.MoveLinRelWrf(0,-25,40,15,0,0)
+        self.rbt.MoveJoints(70,0,0,0,35,0)
+        self.rbt.MoveJoints(35,0,0,0,35,0)
+        self.rbt.MoveJoints(35,9,0,0,37,0)
+        self.rbt.MoveJoints(35,9,0,0,37,270)
+        self.rbt.MoveJoints(35,0,0,0,35,0)
         #if (not self.debug):
             #self.switch.assert_on()
         self.log("component fluxxed")
 
     def solder(self):
         self.rbt.MoveJoints(0,0,0,0,0,0)
-        self.rbt.MoveLinRelWrf(22, 0, -77, 0, 0, 0)
-        self.rbt.SetCartLinVel(30)
-        self.rbt.MoveLinRelWrf(0, 0, 0, 0, 0, -80)
-        self.rbt.MoveLinRelWrf(0, 0, 0, 0, 0, -80)
-        self.rbt.MoveLinRelWrf(0, 0, 0, 0, 0, -80)
-        self.rbt.Delay(.3)
+        self.rbt.MoveJoints(0,0,0,0,70,0)
+        #self.rbt.MoveLinRelWrf(55, 0, -13, 0, 0, 0)
+        self.rbt.SetJointVel(10)
+        self.rbt.MoveJoints(0, 23.82717, -23.11536, 0, 69.28819, -80)
+        self.rbt.MoveJoints(0, 23.82717, -23.11536, 0, 69.28819, 180)
+        self.rbt.MoveJoints(0, 23.82717, -23.11536, 0, 69.28819, 270)
+        self.rbt.SetJointVel(50)
+        self.rbt.Delay(.5)
+        print(self.rbt.GetJoints())
+        self.rbt.Delay(3)
+        self.rbt.SetCartLinVel(20)
+        self.rbt.MoveLinRelWrf(-30, 0, 0, 0, 0, 0)
         self.rbt.MoveJoints(0,0,0,0,0,0)
+        self.rbt.SetCartLinVel(200)
         #self.log("solder process started")
         #self.rbt.MoveJoints(14.02759,15.52448,-7.64043,61.23259,-16.05259,-60.26121)
         ##check 1: hold on! wave is going!!
@@ -164,6 +151,10 @@ class Component(Logger):
         self.log("solder process done")
 
     def drop(self):
+        self.rbt.MoveJoints(-40,10,0,0,30,0)
+        self.rbt.MoveLinRelWrf(0, 0, -30, 0, 0, 0)
+        self.rbt.Delay(3)
+        self.rbt.MoveJoints(-40,0,0,0,0,0)
         #self.rbt.MoveJoints(0,0,0,0,0,-90)
         #self.rbt.MoveLinRelWrf(10, 0, -30, -90, 0, 0)
         #self.rbt.MoveLinRelWrf(0, -65, -60, 0, 0, 0)
