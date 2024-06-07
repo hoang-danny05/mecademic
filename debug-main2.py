@@ -67,10 +67,13 @@ except Exception as e:
 ##################################
 
 if index != None:
-    component = Component(robot, switch, debug=False, index=index - 1)
+    component = Component(robot, switch, debug=True, index=index - 1)
 else:
     component = Component(robot, switch, debug=False)
 robot.ActivateAndHome()
+
+
+
 
 
 
@@ -88,8 +91,6 @@ try:
         component.pressButton()
         component.grabComp()
         # #component.preheat() #one day
-        component.flux()
-        component.solder()
         component.flux()
         component.solder()
         component.drop()

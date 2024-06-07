@@ -45,7 +45,7 @@ class Component(Logger):
     def grabComp(self):
         #//new pick up
         self.rbt.SetCartLinVel(70)
-        self.rbt.MoveLinRelWrf(0, 1, -23, 0, 0, 0)
+        self.rbt.MoveLinRelWrf(0, 1, -26, 0, 0, 0)
         if (not self.debug):
             self.rbt.SetValveState(1)
             self.rbt.Delay(1)
@@ -85,7 +85,8 @@ class Component(Logger):
         self.rbt.SetCartLinVel(30)
         #45.6 first success
         #46.15 hits
-        self.rbt.MoveLinRelWrf(0, 0, -46.3, 0, 0, 0)
+        #46.3
+        self.rbt.MoveLinRelWrf(0, 0, -48.8, 0, 0, 0)
         self.rbt.Delay(2.5)
         self.rbt.SetCartLinVel(15)
         self.rbt.MoveLinRelWrf(0, 0, 45, 0, 0, 0)
@@ -102,18 +103,18 @@ class Component(Logger):
         self.rbt.MoveLinRelWrf(0, -65, -60, 0, 0, 0)
         #self.rbt.MoveJoints(-46.29698,48.49603,-47.96922,-89.49672,-46.29931,0)
         self.rbt.SetValveState(0)
-        self.rbt.Delay(1)
-        self.rbt.SetCartLinVel(5000)
-        self.rbt.MoveLinRelWrf(0, 0, 10, 0, 0, 0)
-        self.rbt.Delay(.01)
-        self.rbt.MoveLinRelWrf(0, 0, -10, 0, 0, 0)
-        self.rbt.Delay(.01)
-        self.rbt.MoveLinRelWrf(0, 0, 10, 0, 0, 0)
-        self.rbt.Delay(.01)
-        self.rbt.MoveLinRelWrf(0, 0, -10, 0, 0, 0)
-        if (not self.debug):
-            self.rbt.SetValveState(1)
-            self.switch.assert_off()
-            self.rbt.SetValveState(0)
+        # self.rbt.Delay(1)
+        # self.rbt.SetCartLinVel(5000)
+        #self.rbt.MoveLinRelWrf(0, 0, 10, 0, 0, 0)
+        #self.rbt.Delay(.01)
+        #self.rbt.MoveLinRelWrf(0, 0, -10, 0, 0, 0)
+        #self.rbt.Delay(.01)
+        #self.rbt.MoveLinRelWrf(0, 0, 10, 0, 0, 0)
+        #self.rbt.Delay(.01)
+        #self.rbt.MoveLinRelWrf(0, 0, -10, 0, 0, 0)
+        #if (not self.debug):
+        #    self.rbt.SetValveState(1)
+        #    self.switch.assert_off()
+        #    self.rbt.SetValveState(0)
         self.rbt.MoveLinRelWrf(0, 0, 90, 0, 0, 0)
         self.finished()

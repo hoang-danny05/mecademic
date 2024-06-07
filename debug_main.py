@@ -1,6 +1,6 @@
 import mecademicpy.robot as MecademicRobot
 import mecademicpy.robot_classes  
-from Components.QuadTray import Component
+from Components.FormPart import Component
 import sys
 from time import sleep
 from lib.OutputStyle import Foreground, Style
@@ -115,6 +115,17 @@ except AssertionError:
         robot.MoveLinRelWrf(0, 0, 100, 0, 0, 0)
     except KeyboardInterrupt:
         print(Style.bold, "Exited", Style.reset)
+        try:
+            robot.MoveLinRelWrf(0, 0, 100, 0, 0, 0)
+        except KeyboardInterrupt:
+            print(Style.bold, "Exited", Style.reset)
+        except mecademicpy.robot_classes.InterruptException:
+            robot.ResetError()
+            robot.ResumeMotion()
+            try: 
+                robot.MoveLinRelWrf(0, 0, 10, 0, 0, 0)
+            except Exception:
+                pass
     except mecademicpy.robot_classes.InterruptException:
         robot.ResetError()
         robot.ResumeMotion()
