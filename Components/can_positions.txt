@@ -1,0 +1,28 @@
+# CAN PART NEW COORDINATES
+# FLUXER DIRECTLY LAID ON THE HAKKO'S SIDE
+# FLUXER LOOSELY CONNECTED, CHECK DANNY'S PICTURES
+
+// //above part
+// MoveJoints(110.79983,29.52828,7.34664,2.39638,-39.20379,-1.9181)
+// MoveLinRelWrf(0, 0, -10, 0, 0, 0)
+// SetValveState(1)
+// Delay(.5)
+// MoveLinRelWrf(0, 0, 30, 0, 0, 0)
+// MoveJoints(90, 0, 0, 0, 0, 0)
+
+// //be flux
+// MoveJoints(68.50862,48.29483,-54.1694,7.16276,-0.95121,-31.51552) //before
+// MoveJoints(58.52845,54.92741,-57.43448,7.16276,-0.95121,-7.16897) //above
+// MoveLinRelWrf(0, 0, -5, 0, 0, 0)
+// Delay(1)
+// MoveLinRelWrf(0, 0,5, 0, 0, 0)
+// MoveJoints(57.33724,49.15474,-56.80034,7.16276,-0.95121,-7.16897)
+
+// //in flux original
+//MoveJoints(58.40948,61.95983,-65.41112,0,0,0)
+
+// //above preheat
+// MoveJoints(38.97543,23.55957,-13.15733,11.70672,-14.75276,-11.53966)
+// MoveJoints(38.97543,24.66,6.1606,5.16983,-34.98672,-4.44828)
+// Delay(1)
+// MoveJoints(38.97543,23.55957,-13.15733,11.70672,-14.75276,-11.53966)

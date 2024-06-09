@@ -8,11 +8,8 @@ from Components.VacuumSwitch import VacuumSwitch
 #Class based off of SOP16
 class Component(Logger):
     """
-    TAPE: 12mm button dispenser in the 3rd slot to the left. 
-        part was at the red line (probably gone now)
-    FLUX: small ceramic bowl on top of the large black flux holder
-        2.5 inches from the inner edge from both sides of the hakko sides
-        flux level really low
+    IDK WHAT PART THIS WAS I FORGOT TO DOCUMENT
+
     IMPLEMENTS: LOGGER, DEBUG, INDEX
     PROGRAMMING: SHOULD START AT INDEX 0 UNLESS OTHERWISE SPECIFIED.
     """

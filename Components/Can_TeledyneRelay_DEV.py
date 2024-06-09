@@ -8,11 +8,20 @@ from Components.VacuumSwitch import VacuumSwitch
 #Class based off of SOP16
 class Component(Logger):
     """
-    TAPE: 12mm button dispenser in the 3rd slot to the left. 
-        part was at the red line (probably gone now)
-    FLUX: small ceramic bowl on top of the large black flux holder
-        2.5 inches from the inner edge from both sides of the hakko sides
-        flux level really low
+    FEEDER: Fixture on the largest tube feeder 
+        feeder on the right slot
+        tube on the left most slot
+        fixture on the top-left most position
+
+    VACCUM: brass one with the rubber thing
+
+    FLUX: Uses temporary spot for Chad's new Fluxer!
+
+    Notes: 
+        fluxer position is in my camera roll! lying directly on the hakko
+        preheats!
+
+        hakko's solder level is very fussy
     IMPLEMENTS: LOGGER, DEBUG 
     """
     def __init__(self, robot : mecarbt.Robot, switch : VacuumSwitch, **kwargs):
@@ -32,45 +41,42 @@ class Component(Logger):
         ##########################################################################################
         # FIRST BLOCK EXECTUED BY main.py
         ##########################################################################################
-        #RESET ROBOT
-        ### pressbutton ### 12mm
-        #buttono above
-        self.rbt.SetJointVel(100)
+        # it setups the robot :)
+        self.rbt.SetJointVel(50)
         self.rbt.SetCartLinVel(200)
         self.rbt.MoveJoints(90,0,0,0,0,0)
         self.rbt.SetJointVel(100)
         self.rbt.MoveLinRelWrf(0, 100, -150, 0, 0, 0)
-        #//button is done 
     
     def grabComp(self):
         #//new pick up
-        self.rbt.SetCartLinVel(70)
-        self.rbt.MoveLinRelWrf(0, 1, -26, 0, 0, 0)
+        self.rbt.MoveJoints(110.79983,29.52828,7.34664,2.39638,-39.20379,-1.9181)
+        self.rbt.MoveLinRelWrf(0, 0, -10, 0, 0, 0)
         if (not self.debug):
             self.rbt.SetValveState(1)
-            self.rbt.Delay(1)
-        self.rbt.MoveLinRelWrf(0, 0, 50, 0, 0, 0)
-        self.rbt.SetJointVel(30)
+            self.rbt.Delay(.5)
+        self.rbt.MoveLinRelWrf(0, 0, 30, 0, 0, 0)
         self.rbt.MoveJoints(90,0,0,0,0,0)
         if (not self.debug):
             self.switch.assert_on()
         self.log("component grabbed")
 
     def flux(self):
-        self.rbt.SetJointVel(30)
-        self.rbt.MoveJoints(50.13491, 52.4834, -67.20228, 101.97951, -51.68729, -108.89322)
-        #self.rbt.MoveLinRelWrf(0,0,10,0,0,0)
-        # has moved right above
-        self.rbt.SetJointVel(50)
-        self.rbt.SetCartLinVel(50)
-        if (not self.debug):
-            self.switch.assert_on()
-        self.rbt.MoveLinRelWrf(0,0,-29,0,0,0)
-        self.rbt.Delay(.3)
-        self.rbt.MoveLinRelWrf(0,-25,40,15,0,0)
-        if (not self.debug):
-            self.switch.assert_on()
+        #be flux
+        self.rbt.MoveJoints(68.50862,48.29483,-54.1694,7.16276,-0.95121,-31.51552) //before
+        self.rbt.MoveJoints(58.52845,54.92741,-57.43448,7.16276,-0.95121,-7.16897) //above
+        self.rbt.MoveLinRelWrf(0, 0, -5, 0, 0, 0)
+        self.rbt.Delay(1)
+        self.rbt.MoveLinRelWrf(0, 0,5, 0, 0, 0)
+        self.rbt.MoveJoints(57.33724,49.15474,-56.80034,7.16276,-0.95121,-7.16897)
         self.log("component fluxxed")
+
+    def preheat(self):
+        self.rbt.//above preheat
+        self.rbt.MoveJoints(38.97543,23.55957,-13.15733,11.70672,-14.75276,-11.53966)
+        self.rbt.MoveJoints(38.97543,24.66,6.1606,5.16983,-34.98672,-4.44828)
+        self.rbt.Delay(1)
+        self.rbt.MoveJoints(38.97543,23.55957,-13.15733,11.70672,-14.75276,-11.53966)
 
     def solder(self):
         self.log("solder process started")

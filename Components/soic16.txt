@@ -1,0 +1,55 @@
+// //setup
+// MoveJoints(90, 0, 0, 0, 0, 0)
+// SetJointVel(50)
+
+// //above button
+// MoveJoints(89.3656,47.10879,-5.32526,-0.95172,-41.78897,0.70948)
+// MoveLinRelWrf(0, 0, -11, 0, 0, 0)
+// Delay(.25)
+// MoveLinRelWrf(0, 0, 14, 0, 0, 0)
+
+// // on the part
+// // MoveJoints(91.70948,42.12362,13.10922,2.0819,-55.25224,-1.18707)
+
+// //above the part
+// MoveJoints(91.70922,38.45224,11.54845,2.23241,-50.02397,-1.43534)
+// MoveLinRelWrf(0, 0, -15, 0, 0, 0)
+// SetValveState(1)
+// Delay(.5)
+// MoveLinRelWrf(0, 0, 15, 0, 0, 0)
+
+// MoveJoints(90, 0, 0, 0, 0, 0)
+
+// //be flux
+// MoveJoints(68.50862,48.29483,-54.1694,7.16276,-0.95121,-31.51552) //before
+// MoveJoints(58.52845,54.92741,-57.43448,7.16276,-0.95121,-7.16897) //above
+// MoveLinRelWrf(0, 0, -15, 0, 0, 0)
+// Delay(1)
+// MoveLinRelWrf(0, 0,5, 0, 0, 0)
+// MoveJoints(57.33724,49.15474,-56.80034,7.16276,-0.95121,-7.1680)
+
+// SetJointVel(25)
+// //above preheat
+// MoveJoints(45.92638,28.83078,1.85586,30.81052,-34.33086,-26.18103)
+
+// //above solder
+// MoveJoints(5.09198,16.83362,7.24164,12.32276,-24.57621,-11.23621)
+// //right freaking on the solder
+// MoveJoints(5.18509,18.26509,17.85207,8.75328,-36.43655,-7.06121)
+// MoveLinRelWrf(0, 0, -1, 0, 0, 0)
+// SetCartLinVel(15)
+// MoveLinRelWrf(0, -15, 0, 0, 0, 0)
+// SetCartAngVel(10)
+// MoveLinRelWrf(0, 4, 15, -20, 0, 0)
+// // MoveJoints()
+// // MoveJoints()
+
+
+// //above cleaner
+// MoveJoints(-37.86828,23.55569,8.08034,-55.9981,-47.76828,14.89655)
+// SetValveState(0)
+// Delay(1)
+// SetJointVel(50)
+// MoveJoints(90, 0, 0, 0, 0, 0)
+
+//optional shake
