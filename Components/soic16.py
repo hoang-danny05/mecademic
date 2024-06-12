@@ -10,7 +10,7 @@ class Component(Logger):
     """
     FEEDER: 8-pitch wide tape with horizontal parts
 
-    FLUX: temporary position against the hakko for the fluxer
+    FLUX: chad's fluxer, hopefully!
 
     END EFFECTOR: Brass vacuum nozzle without the flex thing
         
@@ -29,42 +29,31 @@ class Component(Logger):
         ##########################################################################################
         #RESET ROBOT
         ### pressbutton ### 12mm
-// //setup
-// SetJointVel(50)
-// MoveJoints(90, 0, 0, 0, 0, 0)
+        #setup
+        self.rbt.SetJointVel(50)
+        self.rbt.MoveJoints(90, 0, 0, 0, 0, 0)
         self.rbt.SetCartLinVel(50)
     
     def grabComp(self):
         #//new pick up
-// //above the part
-// MoveJoints(91.70922,38.45224,11.54845,2.23241,-50.02397,-1.43534)
-// MoveLinRelWrf(0, 0, -15, 0, 0, 0)
-// SetValveState(1)
-// Delay(.5)
-// MoveLinRelWrf(0, 0, 15, 0, 0, 0)
-// MoveJoints(90, 0, 0, 0, 0, 0)
+        #// //above the part
+        self.rbt.MoveJoints(91.70922,38.45224,11.54845,2.23241,-50.02397,-1.43534)
+        self.rbt.MoveLinRelWrf(0, 0, -15, 0, 0, 0)
+        self.rbt.SetValveState(1)
+        self.rbt.Delay(.5)
+        self.rbt.MoveLinRelWrf(0, 0, 15, 0, 0, 0)
+        self.rbt.MoveJoints(90, 0, 0, 0, 0, 0)
         self.log("component grabbed")
 
     def flux(self):
-// //be flux
-// MoveJoints(68.50862,48.29483,-54.1694,7.16276,-0.95121,-31.51552) //before
-// MoveJoints(58.52845,54.92741,-57.43448,7.16276,-0.95121,-7.16897) //above
-// MoveLinRelWrf(0, 0, -15, 0, 0, 0)
-// Delay(1)
-// MoveLinRelWrf(0, 0,5, 0, 0, 0)
-// MoveJoints(57.33724,49.15474,-56.80034,7.16276,-0.95121,-7.1680)
-        self.rbt.SetCartLinVel(1000)
-        self.rbt.MoveLinRelWrf(0, 0, 100, 0, 0, 0)
-        #// robot at 47.08707,18.72905,-4.39034,-75.08431,-44.80034,69.42328
-        self.rbt.MoveJoints(50.13491,45.08948,-48.0494,92.46931,-50.19828,-93.85345)
-        self.rbt.SetCartLinVel(50)
-        self.switch.assert_on()
-        #//FLUXdip starts here
-        #//assert on
-        self.rbt.MoveLinRelWrf(0,0,-47.5,0,0,0)
-        self.rbt.Delay(.3)
-        self.rbt.MoveLinRelWrf(0,0,47.5,0,0,0)
-        self.switch.assert_on()
+        #be flux
+        self.rbt.MoveJoints(68.50862,48.29483,-54.1694,7.16276,-0.95121,-31.51552) //before
+        self.rbt.MoveJoints(58.52845,54.92741,-57.43448,7.16276,-0.95121,-7.16897) //above
+        self.rbt.MoveLinRelWrf(0, 0, -15, 0, 0, 0)
+        self.rbt.Delay(1)
+        self.rbt.MoveLinRelWrf(0, 0,5, 0, 0, 0)
+        self.rbt.MoveJoints(57.33724,49.15474,-56.80034,7.16276,-0.95121,-7.1680)
+        
         self.log("component fluxxed")
 
     def preheat(self):
@@ -84,11 +73,15 @@ class Component(Logger):
 
     def drop(self):
         #// //above cleaner
+        self.rbt.MoveJoints(-32.58388,15.56043,6.46009,14.39638,-22.66397,-13.32586)
+        self.rbt.SetValveState(0)
+        self.rbt.Delay(1)
+
         self.rbt.MoveJoints(-37.86828,23.55569,8.08034,-55.9981,-47.76828,14.89655)
         self.rbt.SetValveState(0)
         self.rbt.Delay(1)
         self.rbt.SetJointVel(50)
-        self.rbt.MoveJoints(90, 0, 0, 0, 0, 0)
+
         #// optional shaky shaky
         # self.rbt.SetCartLinVel(5000)
         # self.rbt.MoveLinRelWrf(0, 0, 10, 0, 0, 0)
@@ -100,8 +93,8 @@ class Component(Logger):
         # self.rbt.MoveLinRelWrf(0, 0, -10, 0, 0, 0)
         self.log("part dropped")
         #//assert off here
-        self.rbt.SetValveState(1)
-        self.rbt.Delay(.1)
         self.switch.assert_off()
         self.rbt.SetValveState(0)
         self.rbt.SetCartLinVel(1000)
+        self.finished()
+        self.rbt.MoveJoints(90, 0, 0, 0, 0, 0)

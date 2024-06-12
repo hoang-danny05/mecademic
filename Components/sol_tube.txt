@@ -1,0 +1,19 @@
+// MoveJoints(90, 0, 0, 0, 0, 0)
+MoveJoints(100.31224,63.22681,-36.39957,-80.37931,-72.06207,61.33621)
+MoveLinRelWrf(0, 0, -10, 0, 0, 0)
+Delay(.5)
+SetValveState(1)
+MoveLinRelWrf(0, 0, 10, 0, 0, 0)
+
+#assert on 
+
+#flux 
+#preheat
+
+//solder
+MoveJoints(0, 0, 0, 0, 0, 0)
+MoveJoints(5.49724,17.10466,14.71216,10.34586,-32.23966,-8.77759)
+
+//new drop
+MoveJoints(-32.58388,15.56043,6.46009,14.39638,-22.66397,-13.32586)
+
